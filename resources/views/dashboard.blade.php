@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -14,4 +16,9 @@
             </div>
         </div>
     </div>
+
+    <div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
+      
+    </div>
+    
 </x-app-layout>

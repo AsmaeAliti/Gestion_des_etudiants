@@ -6,8 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> -->
-                        <img src="{{ asset('/imgs/arfan_logo_menu.jpg') }}" alt="Arfan Logo" width="100" height="100">
+                        <img src="{{ asset('/imgs/arfan_logo_menu.jpg') }}" alt="Arfan Logo" width="80" height="80">
 
                     </a>
                 </div>
