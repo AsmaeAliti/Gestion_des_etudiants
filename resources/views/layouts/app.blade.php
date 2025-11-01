@@ -10,8 +10,9 @@
         <!-- Tailwind CSS CDN -->
         <script src="{{ asset('js/tailwindcss_3.min.js') }}" defer></script>
         <!-- Scripts -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{-- asset('css/app.css') --}}">
         <link rel="stylesheet" href="{{ asset('css/Bootstrap5_3.min.css') }}">
+        @yield('styles')
 
     </head>
     <body class="font-sans antialiased">
@@ -19,30 +20,25 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                  @yield('header')
+                </div>
+            </header>
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+              @yield('content')
             </main>
         </div>
     </body>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{-- asset('js/app.js') --}}" defer></script>
+    
     <!-- Alpine.js CDN (needed for Breeze interactions) -->
     <script src="{{ asset('js/alpinejs3.min.js') }}" defer></script>
     <script src="{{ asset('js/popper2.min.js') }}" ></script>
     <script src="{{ asset('js/Bootstrap5_3.min.js') }}" ></script>
-
-    <script src="{{ asset('js/jquery.min.js') }}" ></script>
-    <script src="{{ asset('js/dataTables.min.js') }}" ></script>
-    <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}" ></script>
-
+    @yield('scripts')
 
 </html>
