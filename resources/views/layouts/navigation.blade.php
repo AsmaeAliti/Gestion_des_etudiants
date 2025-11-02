@@ -11,10 +11,17 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Students Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('لوحة التحكم') }}
+                    </x-nav-link>
+                </div>
+                
+                <!-- Organization List -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('organization_list')" :active="request()->routeIs('organization_list')">
+                        {{ __('قائمة الروافد') }}
                     </x-nav-link>
                 </div>
             </div>
