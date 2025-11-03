@@ -3,15 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Log;
 
 class StudentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index(){
+      $students_data = DB::table('students')
+          ->leftJoin('inclusive_organization', 'students.Inclusive_organization', '=', 'inclusive_organization.id')
+          ->select('students.*', 'inclusive_organization.organization_name')
+          ->orderBy('students.created_at', 'DESC')
+          ->get();
+
+      // Log::info($students_data);
+      return view('dashboard', compact('students_data'));
     }
 
     /**

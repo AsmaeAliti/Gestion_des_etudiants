@@ -12,11 +12,14 @@
         <!-- Scripts -->
         <link rel="stylesheet" href="{{-- asset('css/app.css') --}}">
         <link rel="stylesheet" href="{{ asset('css/Bootstrap5_3.min.css') }}">
+        <!-- font-awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+        
         @yield('styles')
 
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 pb-5">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -30,7 +33,11 @@
             <main>
               @yield('content')
             </main>
+
         </div>
+
+        @include('layouts.footer')
+
     </body>
 
     <script src="{{-- asset('js/app.js') --}}" defer></script>

@@ -10,19 +10,15 @@
 
     @section('header')
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('لوحة التحكم') }}
+        {{ __('لوحة التحكم') }}
       </h2>
     @endsection
     
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("لقد قمت بتسجيل الدخول!") }}
-                </div>
-            </div>
-        </div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-12">
+      <div class="alert alert-info text-center ">
+        <i class="fa-solid fa-circle-info"></i> <b>ملاحظة :</b> تُظهر هذه القائمة جميع التلاميذ والتلميذات المسجلين في النظام.
+      </div>
     </div>
 
     <div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -53,7 +49,26 @@
             </tr>
         </thead>
         <tbody>
-          
+          @foreach($students_data as $student)
+            <tr>
+              <td><b>{{ $student->id }}</b></td>
+              <td>{{ $student->first_name }}</td>
+              <td>{{ $student->last_name }}</td>
+              <td>{{ $student->gender }}</td>
+              <td>{{ $student->age }}</td>
+              <td>{{ $student->massar_code }}</td>
+              <td>{{ $student->education_level }}</td>
+              <td>{{ $student->inclusive_teacher }}</td>
+              <td>{{ $student->disability_type }}</td>
+              <td>{{ $student->disability_degree }}</td>
+              <td>{{ $student->needs_assistant }}</td>
+              <td>
+                <button class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></button>
+                <button class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+              </td>
+            </tr>
+          @endforeach
         </tbody>
       </table>
     </div>
