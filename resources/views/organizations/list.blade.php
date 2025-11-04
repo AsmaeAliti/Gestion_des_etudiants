@@ -21,7 +21,7 @@
     </div>
     
     <div class="container max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <table id="organization_list" class="table table-striped">
+      <table id="organization_list" class="table table-hover table-striped">
         <thead class="table-dark">
             <tr class="text-center">
               <th scope="col">الروافد</th>

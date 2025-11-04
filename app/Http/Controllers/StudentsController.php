@@ -18,8 +18,13 @@ class StudentsController extends Controller
           ->orderBy('students.created_at', 'DESC')
           ->get();
 
+      $organizations = DB::table('inclusive_organization')
+          ->select('*')
+          ->orderBy('created_at', 'DESC')
+          ->get();
+
       // Log::info($students_data);
-      return view('dashboard', compact('students_data'));
+      return view('dashboard', compact('students_data', 'organizations'));
     }
 
     /**
