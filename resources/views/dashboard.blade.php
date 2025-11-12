@@ -13,7 +13,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('جدول تتبع التلاميذ') }}
         </h2>
-        <div class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#StoreStudents"><i class="fa-solid fa-user-plus"></i> إضافة تلميذ جديد</div>
+        <div class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#StoreStudents"><i class="fa-solid fa-user-plus"></i> إضافة تلميذ(ة)</div>
       </div>
     @endsection
     
@@ -84,177 +84,202 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h1 class="modal-title fs-5"> إضافة تلميذ جديد </h1>
+            <h1 class="modal-title fs-5"> إضافة تلميذ(ة) </h1>
             <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
           <div class="modal-body">
-            
-            <div class="alert alert-info text-center ">
-              <i class="fa-solid fa-circle-info"></i> <b>ملاحظة :</b> يرجى ملء جميع الحقول المطلوبة بعناية لضمان تسجيل التلميذ بشكل صحيح في النظام.
+
+            <div class="alert alert-info text-center mb-4">
+              <i class="fa-solid fa-circle-info"></i> 
+              <b>ملاحظة :</b> يرجى ملء جميع الحقول المطلوبة بعناية لضمان تسجيل التلميذ(ة) بشكل صحيح في النظام.
             </div>
 
+            <form method="POST" id="student_form" enctype="multipart/form-data" action="">
+            @csrf
 
-            <form method="POST" enctype="multipart/form-data" action="">
-
-              <div class="row my-4">
-
-                <label class="col-1" for="name">الاسم: </label>
-                <div class="col-4">
-                  <input class="form-control" id="name" name="Name" value="">
+              <!-- القسم 1: المعلومات الشخصية -->
+              <div class="card mb-6 border-0 shadow-sm overflow-hidden">
+                <div class="card-header bg-blue-100 text-blue-900 fw-semibold text-center py-3 text-lg">
+                  <i class="fa-solid fa-address-card me-2"></i> المعلومات الشخصية
                 </div>
+                
+                <div class="card-body bg-blue-50 px-4 py-4 rounded-bottom">
+                  <div class="row g-4">
+                    <!-- Massar Code -->
+                    <div class="col-md-4">
+                      <label for="massar_code" class="form-label fw-medium text-gray-700">
+                        رمز مسار :
+                      </label>
+                      <input type="text" class="form-control rounded-xl" id="massar_code" name="Massar_code" required>
+                    </div>
 
-                <label class="col-1" for="last_name">النسب: </label>
-                <div class="col-3">
-                  <input class="form-control" id="last_name" name="Last_name" value="">
-                </div>
-            
-                <label class="col-1" for="age">السن: </label>
-                <div class="col-2">
-                  <input class="form-control" id="age" name="Age" type="number" value="0">
-                </div>
+                    <!-- First Name -->
+                    <div class="col-md-4">
+                      <label for="First_name" class="form-label fw-medium text-gray-700">
+                        الاسم :
+                      </label>
+                      <input type="text" class="form-control rounded-xl" id="First_name" name="First_name" required>
+                    </div>
 
-              </div>
-              
-              <hr>
+                    <!-- Last Name -->
+                    <div class="col-md-4">
+                      <label for="last_name" class="form-label fw-medium text-gray-700">
+                        النسب :
+                      </label>
+                      <input type="text" class="form-control rounded-xl" id="last_name" name="Last_name" required>
+                    </div>
 
-              <!-- Radio buttons for gender -->
-              <div class="form-group my-4">
-                  <label>الجنس : </label>
-                  <div class="form-check">
-                    <div class="row mt-2">
-                      <div class="col-6">
-                        <input class="form-check-input float-end mx-3" type="radio" name="Sexe" id="male" value="ذكر">
-                        <label class="form-check-label float-end" for="male">
-                            ذكر
+                    <!-- Age -->
+                    <div class="col-md-4">
+                      <label for="age" class="form-label fw-medium text-gray-700">
+                        السن :
+                      </label>
+                      <input type="number" class="form-control rounded-xl" id="age" name="Age" value="0">
+                    </div>
+
+                    <!-- Birth Date -->
+                    <div class="col-md-4">
+                      <label for="birth_date" class="form-label fw-medium text-gray-700">
+                        تاريخ الازدياد :
+                      </label>
+                      <input type="date" class="form-control rounded-xl" id="birth_date" name="Birth_date" required>
+                    </div>
+
+                    <!-- Birth Place -->
+                    <div class="col-md-4">
+                      <label for="birth_place" class="form-label fw-medium text-gray-700">
+                        مكان الازدياد :
+                      </label>
+                      <input type="text" class="form-control rounded-xl" id="birth_city" name="Birth_place" required>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="col-md-12">
+                      
+                      <div class="d-flex justify-content-center gap-4">
+                        <label class="form-label fw-medium text-gray-700 d-block mb-2">
+                          الجنس :
                         </label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="gender" id="male" value="ذكر" checked>
+                          <label class="form-check-label" for="male"><i class="fa-solid fa-person"></i> ذكر</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="gender" id="female" value="أنثى">
+                          <label class="form-check-label" for="female"><i class="fa-solid fa-person-dress"></i> أنثى</label>
+                        </div>
                       </div>
-                      <div class="col-6">
-                        <input class="form-check-input float-end mx-3" type="radio" name="Sexe" id="female" value="أنثى">
-                        <label class="form-check-label float-end" for="female">
-                            أنثى
-                        </label>
-                      </div>
-                    </div>                  
+                    </div>
                   </div>
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="birth_date">تاريخ الازدياد : </label>
-                  <input type="date" id="birth_date" name="Birth_date" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="birth_city">مكان الازدياد : </label>
-                  <input id="birth_city" name="Birth_city" value="" class="form-control mt-3 ">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="massar_code">رمز مسار : </label>
-                  <input id="massar_code" name="Massar_code" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="school_level">المستوى الدراسي : </label>
-                  <input id="school_level" name="School_level" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="Integrated_teacher">الاستاذ الدامج : </label>
-                  <input id="Integrated_teacher" name="Integrated_teacher" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="inclusive_organization">المؤسسة الدامجة : </label>
-                  <select id="inclusive_organization" name="Inclusive_organization" class="form-select mt-3">
-                      <option value="">اختر المؤسسة الدامجة</option>
-                      @foreach($organizations as $organization)
-                        <option value="{{ $organization->id }}">{{ $organization->organization_name }}</option>
-                      @endforeach
-                  </select>
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="disability_type">نوع الاعاقة : </label>
-                  <input id="disability_type" name="Disability_type" value="" class="form-control mt-3">
+                </div>
               </div>
 
 
-              <div class="form-group my-4">
-                  <label for="disability_level">درجتها : </label>
-
-
-                  <select class="form-select" aria-label="Default select example" name="Disability_level" value="">
-                    <option value="عميقة">عميقة</option>
-                    <option value="متوسطة">متوسطة</option>
-                    <option value="خفيفة">خفيفة</option>
-                    <option value="متطورة">متطورة</option>
-                  </select>
-              </div>
-
-
-              <div class="form-group my-4">
-                  <label for="Companian_need">الحاجة إلى مرافق : </label>
-
-
-                  <div class="form-check">
-                    <div class="row mt-2">
-                      <div class="col-6">
-                        <input class="form-check-input float-end mx-3" type="radio" name="Companian_need" id="yes" value="نعم" >
-                        <label class="form-check-label float-end" for="yes">
-                        نعم
-                        </label>
-                      </div>
-                      <div class="col-6">
-                        <input class="form-check-input float-end mx-3" type="radio" name="Companian_need" id="no" value="لا">
-                        <label class="form-check-label float-end" for="no">
-                        لا
-                        </label>
-                      </div>
-                    </div>                  
+              <!-- القسم 2: المعلومات الدراسية -->
+              <div class="card mb-4 shadow-sm border-0">
+                <div class="card-header bg-emerald-100 text-emerald-800 fw-bold text-center"><i class="fa-solid fa-person-chalkboard"></i> المعلومات الدراسية</div>
+                <div class="card-body bg-emerald-50">
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label for="inclusive_organization" class="form-label fw-medium text-gray-700">المؤسسة الدامجة :</label>
+                      <select id="inclusive_organization" name="Inclusive_organization" class="form-select rounded-xl">
+                        <option value="">اختر المؤسسة الدامجة</option>
+                        @foreach($organizations as $organization)
+                          <option value="{{ $organization->id }}">{{ $organization->organization_name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="school_level" class="form-label fw-medium text-gray-700">المستوى الدراسي :</label>
+                      <input type="text" class="form-control rounded-xl" id="school_level" name="School_level" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="Integrated_teacher" class="form-label fw-medium text-gray-700">الأستاذ(ة) الدامج(ة) :</label>
+                      <input type="text" class="form-control rounded-xl" id="Integrated_teacher" name="Integrated_teacher" required>
+                    </div>
                   </div>
-
+                </div>
               </div>
 
-              <div class="form-group my-4">
-                  <label for="Hours_number">عدد ساعات الاستفادة من خدمات القاعة : </label>
-                  <input id="Hours_number" name="Hours_number" value="" class="form-control mt-3 ">
+              <!-- القسم 3: معلومات الإعاقة -->
+              <div class="card mb-4 shadow-sm border-0">
+                <div class="card-header bg-yellow-100 text-yellow-800 fw-bold text-center"><i class="fa-solid fa-wheelchair"></i> معلومات الإعاقة</div>
+                <div class="card-body bg-yellow-50">
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label for="disability_type" class="form-label fw-medium text-gray-700">نوع الإعاقة :</label>
+                      <input type="text" class="form-control rounded-xl" id="disability_type" name="Disability_type" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="disability_level" class="form-label fw-medium text-gray-700">درجة الإعاقة :</label>
+                      <select class="form-select rounded-xl" name="Disability_level">
+                        <option value="">اختر الدرجة</option>
+                        <option value="عميقة">عميقة</option>
+                        <option value="متوسطة">متوسطة</option>
+                        <option value="خفيفة">خفيفة</option>
+                        <option value="متطورة">متطورة</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label d-block">الحاجة إلى مرافق :</label>
+                      <div class="d-flex justify-content-around">
+                        <div>
+                          <input class="form-check-input" type="radio" name="Companian_need" id="yes" value="نعم" checked>
+                          <label class="form-check-label" for="yes">نعم</label>
+                        </div>
+                        <div>
+                          <input class="form-check-input" type="radio" name="Companian_need" id="no" value="لا">
+                          <label class="form-check-label" for="no">لا</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div class="form-group my-4">
-                  <label for="Stervices_provided_type">نوع الخدمات المعرفية المقدّمة : </label>
-                  <input id="Stervices_provided_type" name="Stervices_provided_type" value="" class="form-control mt-3 ">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="Intervention_medical">التدخل الطبي والشبه الطبي : </label>
-                  <input id="Intervention_medical" name="Intervention_medical" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="Intervention_type">نوعه والجهة المتدخلة : </label>
-                  <input id="Intervention_type" name="Intervention_type" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="Conditioning_utilization">الاستفادة من  التكييف ونوعه : </label>
-                  <input id="Conditioning_utilization" name="Conditioning_utilization" value="" class="form-control mt-3">
-              </div>
-
-              <div class="form-group my-4">
-                  <label for="Conditioning_type">طبيعة التكييف الممنوح : </label>
-                  <input id="Conditioning_type" name="Conditioning_type" value="" class="form-control mt-3">
+              <!-- القسم 4: الخدمات والتدخلات -->
+              <div class="card mb-4 shadow-sm border-0">
+                <div class="card-header bg-purple-100 text-purple-800 fw-bold text-center"><i class="fa-solid fa-list-check"></i> الخدمات والتدخلات</div>
+                <div class="card-body bg-purple-50">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="Hours_number" class="form-label fw-medium text-gray-700">عدد ساعات الاستفادة :</label>
+                      <input type="number" class="form-control rounded-xl" id="Hours_number" name="Hours_number" value="0" >
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Stervices_provided_type" class="form-label fw-medium text-gray-700">نوع الخدمات المقدمة :</label>
+                      <input type="text" class="form-control rounded-xl" id="Stervices_provided_type" name="Stervices_provided_type" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Intervention_medical" class="form-label fw-medium text-gray-700">التدخل الطبي / الشبه الطبي :</label>
+                      <input type="text" class="form-control rounded-xl" id="Intervention_medical" name="Intervention_medical" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Intervention_type" class="form-label fw-medium text-gray-700">نوعه والجهة المتدخلة :</label>
+                      <input type="text" class="form-control rounded-xl" id="Intervention_type" name="Intervention_type">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Conditioning_utilization" class="form-label fw-medium text-gray-700">الاستفادة من التكييف ونوعه :</label>
+                      <input type="text" class="form-control rounded-xl" id="Conditioning_utilization" name="Conditioning_utilization">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="Conditioning_type" class="form-label fw-medium text-gray-700">طبيعة التكييف الممنوح :</label>
+                      <input type="text" class="form-control rounded-xl" id="Conditioning_type" name="Conditioning_type">
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </form>
-
           </div>
 
 
+
           <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-success"><i class="fa-solid fa-user-plus"></i> إضافة</button>
-            <button type="button" class="btn btn-sm btn-warning" hidden><i class="fa-solid fa-user-pen"></i> تحديث</button>
             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> إغلاق</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" id="add_student"><i class="fa-solid fa-user-plus"></i> إضافة</button>
+            <button type="button" class="btn btn-sm btn-warning" hidden><i class="fa-solid fa-user-pen"></i> تحديث</button>
           </div>
 
         </div>

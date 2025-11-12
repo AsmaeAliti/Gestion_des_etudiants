@@ -28,19 +28,27 @@ class StudentsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+      Log::info($request->all());
+
+      DB::table('students')->insert([
+          'first_name' => $request->input('First_name'),
+          'last_name' => $request->input('Last_name'),
+          'gender' => $request->input('gender'),
+          'birth_date' => $request->input('Birth_date'),
+          'birth_place' => $request->input('Birth_place'),
+          'age' => $request->input('Age'),
+          'massar_code' => $request->input('Massar_code'),
+          // 'Hours_number' => $request->input('Hours_number'),
+          'Created_at' => now(),
+          'Updated_at' => now(),
+      ]);
+
+
+      return ;
     }
 
     /**
