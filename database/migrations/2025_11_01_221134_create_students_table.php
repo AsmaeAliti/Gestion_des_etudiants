@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('inclusive_teacher')->nullable(); // الاستاذ الدامج
             $table->integer('Inclusive_organization')->nullable(); // المؤسسة الدّامجة 
             $table->string('disability_type')->nullable(); // نوع الاعاقة
-            $table->string('disability_degree')->nullable(); // درجتها
-            $table->boolean('needs_assistant')->default(false); // الحاجة إلى مرافق
+            $table->enum('disability_degree', ['0', '1', '2', '3'])->default('0')->nullable(); // درجتها  0:خفيفة 1:متوسطة 2:عميقة 3:متطورة 
+            $table->enum('needs_assistant', ['N', 'Y'])->default('N'); // الحاجة إلى مرافق
 
             $table->integer('room_service_hours')->nullable();
             $table->string('cognitive_services_type')->nullable();
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('medical_intervention_details')->nullable();
             $table->boolean('benefits_from_adaptation')->default(false);
             $table->string('adaptation_type')->nullable();
-            
+            $table->enum('active', ['0', '1'])->default('1')->nullable(); // 0: غير نشيط 1: نشيط 
             $table->timestamps();
         });
     }

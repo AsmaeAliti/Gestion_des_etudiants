@@ -16,7 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::post('/student/store', [StudentsController::class, 'store']);
+    Route::post('/student/store', [StudentsController::class, 'store'])->name('students.store');
+    Route::post('/student/change_status', [StudentsController::class, 'change_status'])->name('students.change_status');
 
 });
 

@@ -14,6 +14,7 @@ class StudentsController extends Controller
     public function index(){
       $students_data = DB::table('students')
           ->leftJoin('inclusive_organization', 'students.Inclusive_organization', '=', 'inclusive_organization.id')
+          ->where('students.active', '1')
           ->select('students.*', 'inclusive_organization.organization_name')
           ->orderBy('students.created_at', 'DESC')
           ->get();
@@ -30,26 +31,61 @@ class StudentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-      Log::info($request->all());
+    public function store(Request $request) {
+      
+      try {
+        
+        Log::info($request->all());
 
-      DB::table('students')->insert([
-          'first_name' => $request->input('First_name'),
-          'last_name' => $request->input('Last_name'),
-          'gender' => $request->input('gender'),
-          'birth_date' => $request->input('Birth_date'),
-          'birth_place' => $request->input('Birth_place'),
-          'age' => $request->input('Age'),
-          'massar_code' => $request->input('Massar_code'),
-          // 'Hours_number' => $request->input('Hours_number'),
-          'Created_at' => now(),
-          'Updated_at' => now(),
-      ]);
+          // Insert the student record
+          $studentId = DB::table('students')->insertGetId([
+              'first_name' => $request->First_name,
+              'last_name' => $request->Last_name,
+              'gender' => $request->gender ,
+              'birth_date' => $request->Birth_date,
+              'birth_place' => $request->Birth_place,
+              'age' => $request->Age ?? 0,
+              'massar_code' => $request->Massar_code,
+              'education_level' => $request->School_level,
+              'inclusive_teacher' => $request->Integrated_teacher,
+              'Inclusive_organization' => $request->Inclusive_organization ?? null,
+              'disability_type' => $request->Disability_type,
+              'disability_degree' => $request->Disability_level ?? '0',
+              'needs_assistant' => $request->Companian_need ?? 'N',
+              'room_service_hours' => $request->Hours_number ?? 0,
+              'cognitive_services_type' => $request->Stervices_provided_type,
+              'medical_intervention' => $request->Intervention_medical,
+              'medical_intervention_details' => $request->Intervention_type ?? null,
+              'benefits_from_adaptation' => !empty($request->Conditioning_utilization) ? 1 : 0,
+              'adaptation_type' => $request->Conditioning_type ?? null,
+              'created_at' => now(),
+              'updated_at' => now(),
+          ]);
 
+          // Update gender count in inclusive_organization table if organization is selected
+          if (!empty($request->Inclusive_organization)) {
+              $genderField = $request->gender == 'ذكر' ? 'male_count' : 'female_count';
+              
+              DB::table('inclusive_organization')->where('id', $request->Inclusive_organization)->increment($genderField);
+          }
 
-      return ;
-    }
+          // Log success
+          Log::info('Student created successfully', ['student_id' => $studentId ]);
+
+          // Redirect with success message
+          session()->flash('success', 'تم إضافة الطالب بنجاح');
+          return redirect()->route('students.index');
+
+      } catch (\Exception $e) {
+          
+          // Log error
+          Log::error('Error creating student', [ 'error' => $e->getMessage(), 'trace' => $e->getTraceAsString()  ]);
+
+          // Redirect back with error message
+          session()->flash('danger', 'حدث خطأ أثناء إضافة الطالب' );
+          return redirect()->back();
+      }
+  }
 
     /**
      * Display the specified resource.
@@ -75,11 +111,25 @@ class StudentsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function change_status(Request $request){
+        Log::info("Called change_status with data: ", $request->all());
+
+        try{
+        
+          $student_id = $request->student_id;
+          $new_status = $request->new_status;
+          DB::table('students')->where('id', $student_id)->update(['active' => $new_status]);
+
+          session()->flash('success', 'تم تغيير حالة التلميذ بنجاح');
+          return redirect()->back();
+
+        } catch(\Exception $e){
+
+          Log::error('Error changing student status', [ 'error' => $e->getMessage(), 'trace' => $e->getTraceAsString()  ]);
+         
+          session()->flash('danger', 'حدث خطأ أثناء تغيير حالة التلميذ' );
+          return redirect()->back();
+        }
+
     }
 }

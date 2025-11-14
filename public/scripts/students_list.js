@@ -7,7 +7,7 @@ $(document).ready(function () {
   );
 
   $("#add_student").click(function(e) {
-  
+    
     e.preventDefault(); // prevent any default form submission
 
     var form = document.getElementById("student_form");
@@ -16,32 +16,29 @@ $(document).ready(function () {
       form.reportValidity();
       return; // Stop here if invalid
     }
-  
+
     var $this = $(this);
     $this.prop("disabled", true);
     $this.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري الإضافة...');
+    
+    $("#student_form").submit();
 
-    $.ajax({
-      type: "POST",
-      url: "/student/store",
-      data: $("#student_form").serialize(), 
-      success: function(response) {
-        // إعادة تحميل الصفحة بعد الإضافة
-        // location.reload();
+  }) ;
 
-        
-        $this.prop("disabled", false);
-        $this.html('<i class="fa-solid fa-user-plus"></i> إضافة');
-      },
-      error: function(xhr, status, error) {
-        alert("حدث خطأ أثناء إضافة الطالب: " + xhr.responseText);
-        $this.prop("disabled", false);
-        $this.html('<i class="fa-solid fa-user-plus"></i> إضافة');
-      }
-    });
+  $(".change_status").click(function(e) {
+    
+    var student_id = $(this).closest("tr").find("th").eq(0).text().trim();
+    console.log(student_id);
+    $("#change_status_student_id").val(student_id);
+    $("#new_status").val('0'); // تعيين الحالة إلى غير نشيط
 
+    var student_first_name = $(this).closest("tr").find("td").eq(0).text();
+    var student_last_name = $(this).closest("tr").find("td").eq(1).text();
 
-  });
-
+    $("#changeStatus .modal-title").text("تعطيل تسجيل [ "+ student_first_name + " " + student_last_name +" ] ");
+    
+  
+    
+  }) ;
 
 }) ;
