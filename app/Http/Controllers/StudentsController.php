@@ -73,16 +73,16 @@ class StudentsController extends Controller
           Log::info('Student created successfully', ['student_id' => $studentId ]);
 
           // Redirect with success message
-          session()->flash('success', 'تم إضافة الطالب بنجاح');
-          return redirect()->route('students.index');
+          session()->flash('success', 'تم إضافة الطالب(ة) بنجاح');
+          return redirect()->route('dashboard');
 
       } catch (\Exception $e) {
           
           // Log error
-          Log::error('Error creating student', [ 'error' => $e->getMessage(), 'trace' => $e->getTraceAsString()  ]);
+          Log::error('Error creating student', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
 
           // Redirect back with error message
-          session()->flash('danger', 'حدث خطأ أثناء إضافة الطالب' );
+          session()->flash('danger', '(ة)حدث خطأ أثناء إضافة الطالب' );
           return redirect()->back();
       }
   }
@@ -120,14 +120,14 @@ class StudentsController extends Controller
           $new_status = $request->new_status;
           DB::table('students')->where('id', $student_id)->update(['active' => $new_status]);
 
-          session()->flash('success', 'تم تغيير حالة التلميذ بنجاح');
+          session()->flash('success', 'تم تغيير حالة التلميذ(ة) بنجاح');
           return redirect()->back();
 
         } catch(\Exception $e){
 
-          Log::error('Error changing student status', [ 'error' => $e->getMessage(), 'trace' => $e->getTraceAsString()  ]);
+          Log::error('Error changing student status', [ 'error' => $e->getMessage(), 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile()  ]);
          
-          session()->flash('danger', 'حدث خطأ أثناء تغيير حالة التلميذ' );
+          session()->flash('danger', '(ة)حدث خطأ أثناء تغيير حالة التلميذ' );
           return redirect()->back();
         }
 

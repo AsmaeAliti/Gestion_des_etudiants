@@ -14,7 +14,7 @@
           {{ __('جدول تتبع التلاميذ') }}
         </h2>
         <div data-bs-toggle="modal" data-bs-target="#StoreStudents" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600 text-white font-medium text-sm shadow hover:bg-green-700 hover:shadow-md transition cursor-pointer">
-            <i class="fa-solid fa-user-plus text-sm"></i>            إضافة تلميذ(ة)
+            <i class="fa-solid fa-user-plus text-sm"></i> إضافة تلميذ(ة)
         </div>
 
       </div>
