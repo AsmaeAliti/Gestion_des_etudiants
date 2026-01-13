@@ -35,8 +35,8 @@
           @foreach($organization_data as $organization)
             <tr>
               <td>{{ $organization->organization_name }}</td>
-              <td>{{ $organization->male_count }}</td>
               <td>{{ $organization->female_count }}</td>
+              <td>{{ $organization->male_count }}</td>
               <td>{{ $organization->total_members }}</td>
               <td>
                 <!-- <button class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></button> -->

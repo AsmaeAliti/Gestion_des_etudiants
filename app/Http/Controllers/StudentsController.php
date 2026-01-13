@@ -12,20 +12,20 @@ class StudentsController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-      $students_data = DB::table('students')
-          ->leftJoin('inclusive_organization', 'students.Inclusive_organization', '=', 'inclusive_organization.id')
-          ->where('students.active', '1')
-          ->select('students.*', 'inclusive_organization.organization_name')
-          ->orderBy('students.created_at', 'DESC')
-          ->get();
+        $students_data = DB::table('students')
+            ->leftJoin('inclusive_organization', 'students.Inclusive_organization', '=', 'inclusive_organization.id')
+            ->where('students.active', '1')
+            ->select('students.*', 'inclusive_organization.organization_name')
+            ->orderBy('students.created_at', 'DESC')
+            ->get();
 
-      $organizations = DB::table('inclusive_organization')
-          ->select('*')
-          ->orderBy('created_at', 'DESC')
-          ->get();
+        $organizations = DB::table('inclusive_organization')
+            ->select('*')
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
-      // Log::info($students_data);
-      return view('dashboard', compact('students_data', 'organizations'));
+        // Log::info($students_data);
+        return view('dashboard', compact('students_data', 'organizations'));
     }
 
     /**
@@ -33,59 +33,58 @@ class StudentsController extends Controller
      */
     public function store(Request $request) {
       
-      try {
-        
-        Log::info($request->all());
+        try {
+            Log::info($request->all());
 
-          // Insert the student record
-          $studentId = DB::table('students')->insertGetId([
-              'first_name' => $request->First_name,
-              'last_name' => $request->Last_name,
-              'gender' => $request->gender ,
-              'birth_date' => $request->Birth_date,
-              'birth_place' => $request->Birth_place,
-              'age' => $request->Age ?? 0,
-              'massar_code' => $request->Massar_code,
-              'education_level' => $request->School_level,
-              'inclusive_teacher' => $request->Integrated_teacher,
-              'Inclusive_organization' => $request->Inclusive_organization ?? null,
-              'disability_type' => $request->Disability_type,
-              'disability_degree' => $request->Disability_level ?? '0',
-              'needs_assistant' => $request->Companian_need ?? 'N',
-              'room_service_hours' => $request->Hours_number ?? 0,
-              'cognitive_services_type' => $request->Stervices_provided_type,
-              'medical_intervention' => $request->Intervention_medical,
-              'medical_intervention_details' => $request->Intervention_type ?? null,
-              'benefits_from_adaptation' => !empty($request->Conditioning_utilization) ? 1 : 0,
-              'adaptation_type' => $request->Conditioning_type ?? null,
-              'created_at' => now(),
-              'updated_at' => now(),
-          ]);
+            // Insert the student record
+            $studentId = DB::table('students')->insertGetId([
+                'first_name' => $request->First_name,
+                'last_name' => $request->Last_name,
+                'gender' => $request->gender ,
+                'birth_date' => $request->Birth_date,
+                'birth_place' => $request->Birth_place,
+                'age' => $request->Age ?? 0,
+                'massar_code' => $request->Massar_code,
+                'education_level' => $request->School_level,
+                'inclusive_teacher' => $request->Integrated_teacher,
+                'Inclusive_organization' => $request->Inclusive_organization ?? null,
+                'disability_type' => $request->Disability_type,
+                'disability_degree' => $request->Disability_level ?? '0',
+                'needs_assistant' => $request->Companian_need ?? 'N',
+                'room_service_hours' => $request->Hours_number ?? 0,
+                'cognitive_services_type' => $request->Stervices_provided_type,
+                'medical_intervention' => $request->Intervention_medical,
+                'medical_intervention_details' => $request->Intervention_type ?? null,
+                'benefits_from_adaptation' => !empty($request->Conditioning_utilization) ? 1 : 0,
+                'adaptation_type' => $request->Conditioning_type ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-          // Update gender count in inclusive_organization table if organization is selected
-          if (!empty($request->Inclusive_organization)) {
-              $genderField = $request->gender == 'ذكر' ? 'male_count' : 'female_count';
-              
-              DB::table('inclusive_organization')->where('id', $request->Inclusive_organization)->increment($genderField);
-          }
+            // Update gender count in inclusive_organization table if organization is selected
+            if (!empty($request->Inclusive_organization)) {
+                $genderField = $request->gender == 'ذكر' ? 'male_count' : 'female_count';
+                
+                DB::table('inclusive_organization')->where('id', $request->Inclusive_organization)->increment($genderField);
+            }
 
-          // Log success
-          Log::info('Student created successfully', ['student_id' => $studentId ]);
+            // Log success
+            Log::info('Student created successfully', ['student_id' => $studentId ]);
 
-          // Redirect with success message
-          session()->flash('success', 'تم إضافة الطالب(ة) بنجاح');
-          return redirect()->route('dashboard');
+            // Redirect with success message
+            session()->flash('success', 'تم إضافة الطالب(ة) بنجاح');
+            return redirect()->route('dashboard');
 
-      } catch (\Exception $e) {
+        } catch (\Exception $e) {
           
-          // Log error
-          Log::error('Error creating student', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
+            // Log error
+            Log::error('Error creating student', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
 
-          // Redirect back with error message
-          session()->flash('danger', '(ة)حدث خطأ أثناء إضافة الطالب' );
-          return redirect()->back();
-      }
-  }
+            // Redirect back with error message
+            session()->flash('danger', '(ة)حدث خطأ أثناء إضافة الطالب' );
+            return redirect()->back();
+        }
+    }
 
     /**
      * Display the specified resource.
