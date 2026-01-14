@@ -13,7 +13,7 @@ class StudentsController extends Controller
      */
     public function index(){
         $students_data = DB::table('students')
-            ->leftJoin('inclusive_organization', 'students.Inclusive_organization', '=', 'inclusive_organization.id')
+            ->leftJoin('inclusive_organization', 'students.organization_id', '=', 'inclusive_organization.id')
             ->where('students.active', '1')
             ->select('students.*', 'inclusive_organization.organization_name')
             ->orderBy('students.created_at', 'DESC')
@@ -47,7 +47,7 @@ class StudentsController extends Controller
                 'massar_code' => $request->Massar_code,
                 'education_level' => $request->School_level,
                 'inclusive_teacher' => $request->Integrated_teacher,
-                'Inclusive_organization' => $request->Inclusive_organization ?? null,
+                'organization_id' => $request->Inclusive_organization ?? null,
                 'disability_type' => $request->Disability_type,
                 'disability_degree' => $request->Disability_level ?? '0',
                 'needs_assistant' => $request->Companian_need ?? 'N',

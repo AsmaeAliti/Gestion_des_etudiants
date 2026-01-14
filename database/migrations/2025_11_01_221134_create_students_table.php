@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('massar_code')->unique(); // رمز مسار
             $table->string('education_level'); // المستوى الدراسي
             $table->string('inclusive_teacher')->nullable(); // الاستاذ الدامج
-            $table->integer('Inclusive_organization')->nullable(); // المؤسسة الدّامجة 
+            $table->integer('organization_id')->nullable(); // المؤسسة الدّامجة 
             $table->string('disability_type')->nullable(); // نوع الاعاقة
             $table->enum('disability_degree', ['0', '1', '2', '3'])->default('0')->nullable(); // درجتها  0:خفيفة 1:متوسطة 2:عميقة 3:متطورة 
             $table->enum('needs_assistant', ['N', 'Y'])->default('N'); // الحاجة إلى مرافق
