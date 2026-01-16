@@ -13,7 +13,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('جدول تتبع التلاميذ') }}
         </h2>
-        <div data-bs-toggle="modal" data-bs-target="#StoreStudents" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600 text-white font-medium text-sm shadow hover:bg-green-700 hover:shadow-md transition cursor-pointer">
+        <div data-bs-toggle="modal" data-bs-target="#StoreStudents" id="add_student" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600 text-white font-medium text-sm shadow hover:bg-green-700 hover:shadow-md transition cursor-pointer">
             <i class="fa-solid fa-user-plus text-sm"></i> إضافة تلميذ(ة)
         </div>
 
@@ -101,7 +101,7 @@
                   </span>
               </td>
 
-              <td class="text-center">{{ ( $student->needs_assistant == 'Y' ? 'نعم' : 'لا' ) }}</td>
+              <td class="text-center">{{ ( $student->companian_need == 'Y' ? 'نعم' : 'لا' ) }}</td>
               <td>
 
                 <!-- View Button -->
@@ -110,7 +110,7 @@
                 </button>
 
                 <!-- Edit Button -->
-                <button data-bs-toggle="modal" data-bs-target="#StoreStudents" class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">
+                <button href="{{ url('/student/' . $student->id . '/edit') }}" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">
                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                 </button>
 
@@ -200,7 +200,7 @@
                       <label for="birth_place" class="form-label fw-medium text-gray-700">
                         مكان الازدياد :
                       </label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="birth_city" name="Birth_place" required>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="birth_place" name="birth_place" required>
                     </div>
 
                     <!-- Gender -->
@@ -234,7 +234,7 @@
                   <div class="row g-3">
                     <div class="col-md-4">
                       <label for="inclusive_organization" class="form-label fw-medium text-gray-700">المؤسسة الدامجة :</label>
-                      <select id="inclusive_organization" name="Inclusive_organization" class="form-select form-select-sm rounded-xl">
+                      <select id="inclusive_organization" name="inclusive_organization" class="form-select form-select-sm rounded-xl">
                         <option value="">اختر المؤسسة الدامجة</option>
                         @foreach($organizations as $organization)
                           <option value="{{ $organization->id }}">{{ $organization->organization_name }}</option>
@@ -242,8 +242,8 @@
                       </select>
                     </div>
                     <div class="col-md-4">
-                      <label for="school_level" class="form-label fw-medium text-gray-700">المستوى الدراسي  :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="school_level" name="School_level" required>
+                      <label for="education_level" class="form-label fw-medium text-gray-700">المستوى الدراسي  :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="education_level" name="education_level" required>
                     </div>
                     <div class="col-md-4">
                       <label for="Integrated_teacher" class="form-label fw-medium text-gray-700">الأستاذ(ة) الدامج(ة) :</label>
@@ -263,8 +263,8 @@
                       <input type="text" class="form-control form-control-sm rounded-xl" id="disability_type" name="Disability_type" required>
                     </div>
                     <div class="col-md-4">
-                      <label for="disability_level" class="form-label fw-medium text-gray-700">درجة الإعاقة :</label>
-                      <select class="form-select form-select-sm rounded-xl" name="Disability_level">
+                      <label for="disability_degree" class="form-label fw-medium text-gray-700">درجة الإعاقة :</label>
+                      <select class="form-select form-select-sm rounded-xl" name="disability_degree" id="disability_degree">
                         <option value="">اختر الدرجة</option>
                         <option value="0">خفيفة</option>
                         <option value="1">متوسطة</option>
@@ -276,11 +276,11 @@
                       <label class="form-label d-block">الحاجة إلى مرافق :</label>
                       <div class="d-flex justify-content-around">
                         <div>
-                          <input class="form-check-input" type="radio" name="Companian_need" id="yes" value="Y">
+                          <input class="form-check-input" type="radio" name="companian_need" id="yes" value="Y">
                           <label class="form-check-label" for="yes">نعم</label>
                         </div>
                         <div>
-                          <input class="form-check-input" type="radio" name="Companian_need" id="no" value="N" checked>
+                          <input class="form-check-input" type="radio" name="companian_need" id="no" value="N" checked>
                           <label class="form-check-label" for="no">لا</label>
                         </div>
                       </div>
@@ -303,16 +303,16 @@
                       <input type="text" class="form-control form-control-sm rounded-xl" id="Stervices_provided_type" name="Stervices_provided_type" required>
                     </div>
                     <div class="col-md-6">
-                      <label for="Intervention_medical" class="form-label fw-medium text-gray-700">التدخل الطبي / الشبه الطبي :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Intervention_medical" name="Intervention_medical" required>
+                      <label for="medical_intervention" class="form-label fw-medium text-gray-700">التدخل الطبي / الشبه الطبي :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="medical_intervention" name="medical_intervention" required>
                     </div>
                     <div class="col-md-6">
                       <label for="Intervention_type" class="form-label fw-medium text-gray-700">نوعه والجهة المتدخلة :</label>
                       <input type="text" class="form-control form-control-sm rounded-xl" id="Intervention_type" name="Intervention_type">
                     </div>
                     <div class="col-md-6">
-                      <label for="Conditioning_utilization" class="form-label fw-medium text-gray-700">الاستفادة من التكييف ونوعه :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Conditioning_utilization" name="Conditioning_utilization">
+                      <label for="benefits_from_adaptation" class="form-label fw-medium text-gray-700">الاستفادة من التكييف ونوعه :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="benefits_from_adaptation" name="benefits_from_adaptation">
                     </div>
                     <div class="col-md-6">
                       <label for="Conditioning_type" class="form-label fw-medium text-gray-700">طبيعة التكييف الممنوح :</label>

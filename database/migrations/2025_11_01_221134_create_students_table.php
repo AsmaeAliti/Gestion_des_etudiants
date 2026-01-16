@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('organization_id')->nullable(); // المؤسسة الدّامجة 
             $table->string('disability_type')->nullable(); // نوع الاعاقة
             $table->enum('disability_degree', ['0', '1', '2', '3'])->default('0')->nullable(); // درجتها  0:خفيفة 1:متوسطة 2:عميقة 3:متطورة 
-            $table->enum('needs_assistant', ['N', 'Y'])->default('N'); // الحاجة إلى مرافق
+            $table->enum('companian_need', ['N', 'Y'])->default('N'); // الحاجة إلى مرافق
 
             $table->integer('room_service_hours')->nullable();
             $table->string('cognitive_services_type')->nullable();

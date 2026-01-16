@@ -42,30 +42,30 @@ class StudentsController extends Controller
                 'last_name' => $request->Last_name,
                 'gender' => $request->gender ,
                 'birth_date' => $request->Birth_date,
-                'birth_place' => $request->Birth_place,
+                'birth_place' => $request->birth_place,
                 'age' => $request->Age ?? 0,
                 'massar_code' => $request->Massar_code,
-                'education_level' => $request->School_level,
+                'education_level' => $request->education_level,
                 'inclusive_teacher' => $request->Integrated_teacher,
-                'organization_id' => $request->Inclusive_organization ?? null,
+                'organization_id' => $request->inclusive_organization ?? null,
                 'disability_type' => $request->Disability_type,
-                'disability_degree' => $request->Disability_level ?? '0',
-                'needs_assistant' => $request->Companian_need ?? 'N',
+                'disability_degree' => $request->disability_degree ?? '0',
+                'companian_need' => $request->companian_need ?? 'N',
                 'room_service_hours' => $request->Hours_number ?? 0,
                 'cognitive_services_type' => $request->Stervices_provided_type,
-                'medical_intervention' => $request->Intervention_medical,
+                'medical_intervention' => $request->medical_intervention,
                 'medical_intervention_details' => $request->Intervention_type ?? null,
-                'benefits_from_adaptation' => !empty($request->Conditioning_utilization) ? 1 : 0,
+                'benefits_from_adaptation' => !empty($request->benefits_from_adaptation) ? 1 : 0,
                 'adaptation_type' => $request->Conditioning_type ?? null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             // Update gender count in inclusive_organization table if organization is selected
-            if (!empty($request->Inclusive_organization)) {
+            if (!empty($request->inclusive_organization)) {
                 $genderField = $request->gender == 'ذكر' ? 'male_count' : 'female_count';
                 
-                DB::table('inclusive_organization')->where('id', $request->Inclusive_organization)->increment($genderField);
+                DB::table('inclusive_organization')->where('id', $request->inclusive_organization)->increment($genderField);
             }
 
             // Log success
@@ -97,9 +97,11 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit($id){
+        $studebt_info = DB::table("students")->Where("id", $id)->first() ;
+        Log::info("testing edit function") ;
+        Log::info("Student id is #". $id) ;
+        return $studebt_info ;
     }
 
     /**
