@@ -6,7 +6,7 @@ $(document).ready(function () {
     }}
   );
 
-  $("#add_student").click(function(e) {
+  $("#add_student_sbmt").click(function(e) {
     
     e.preventDefault(); // prevent any default form submission
 
@@ -29,7 +29,10 @@ $(document).ready(function () {
   $("#add_student").click(function(e) {
     
     $("#StoreStudents .modal-title").text("إضافة تلميذ(ة) ");
-        
+    
+    $("#add_student_sbmt").show() ;
+    $("#update_student_sbmt").hide() ;
+
     // Text / date / select inputs
     $("#massar_code, #First_name, #last_name, #age, #birth_date, #birth_city, #inclusive_organization, #education_level, #Integrated_teacher, #disability_type, #disability_degree, #Hours_number, #Stervices_provided_type, #medical_intervention, #Intervention_type, #benefits_from_adaptation, #Conditioning_type")
     .val('');
@@ -56,6 +59,10 @@ $(document).ready(function () {
   $(".edit_student").click(function(e) {
     
     var student_id = $(this).closest("tr").find("th").eq(0).text().trim();
+
+    // hide add student button 
+    $("#add_student_sbmt").hide() ;
+    $("#update_student_sbmt").show() ;
 
     var student_first_name = $(this).closest("tr").find("td").eq(0).text();
     var student_last_name = $(this).closest("tr").find("td").eq(1).text();

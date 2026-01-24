@@ -329,8 +329,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> إغلاق</button>
-            <button type="submit" class="btn btn-sm btn-outline-success" id="add_student"><i class="fa-solid fa-user-plus"></i> إضافة</button>
-            <button type="button" class="btn btn-sm btn-warning" hidden><i class="fa-solid fa-user-pen"></i> تحديث</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" id="add_student_sbmt"><i class="fa-solid fa-user-plus"></i> إضافة</button>
+            <button type="button" class="btn btn-sm btn-warning" id="update_student_sbmt"><i class="fa-solid fa-user-pen"></i> تحديث</button>
           </div>
 
         </div>
