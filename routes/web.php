@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/student/store', [StudentsController::class, 'store'])->name('students.store');
     Route::post('/student/change_status', [StudentsController::class, 'change_status'])->name('students.change_status');
     Route::get('/student/{id}/edit', [StudentsController::class, 'edit'] );
+    Route::post('/student/{id}/update', [StudentsController::class, 'update'])->name('students.update');
+
 
 });
 

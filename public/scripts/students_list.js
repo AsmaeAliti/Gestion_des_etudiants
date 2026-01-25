@@ -34,7 +34,7 @@ $(document).ready(function () {
     $("#update_student_sbmt").hide() ;
 
     // Text / date / select inputs
-    $("#massar_code, #First_name, #last_name, #age, #birth_date, #birth_city, #inclusive_organization, #education_level, #Integrated_teacher, #disability_type, #disability_degree, #Hours_number, #Stervices_provided_type, #medical_intervention, #Intervention_type, #benefits_from_adaptation, #Conditioning_type")
+    $("#massar_code, #first_name, #last_name, #age, #birth_date, #birth_city, #inclusive_organization, #education_level, #inclusive_teacher, #disability_type, #disability_degree, #room_service_hours, #services_provided_type, #medical_intervention, #medical_intervention_details, #benefits_from_adaptation, #adaptation_type")
     .val('');
     
   }) ;
@@ -75,25 +75,26 @@ $(document).ready(function () {
       type: "GET",
       success: function(result) {
         
+        $("#s_id").val(result['id']) ;
         $("#massar_code").val(result['massar_code']) ;
-        $("#First_name").val(result['first_name']) ;
+        $("#first_name").val(result['first_name']) ;
         $("#last_name").val(result['last_name']) ;
         $("#age").val(result['age']) ;
         $("#birth_date").val(result['birth_date']) ;
-        $("#birth_city").val(result['birth_place']) ; 
+        $("#birth_place").val(result['birth_place']) ; 
         $('input[name="gender"][value="' + result['gender'] + '"]').prop('checked', true);
         $("#inclusive_organization").val(result['inclusive_organization']) ; 
         $("#education_level").val(result['education_level']) ; 
-        $("#Integrated_teacher").val(result['inclusive_teacher']) ;
+        $("#inclusive_teacher").val(result['inclusive_teacher']) ;
         $("#disability_type").val(result['disability_type']) ;
         $("#disability_degree").val(result['disability_degree']) ; 
         $('input[name="companian_need"][value="' + result['companian_need'] + '"]').prop('checked', true);
-        $("#Hours_number").val(result['room_service_hours']) ;
-        $("#Stervices_provided_type").val(result['cognitive_services_type']) ;
+        $("#room_service_hours").val(result['room_service_hours']) ;
+        $("#services_provided_type").val(result['cognitive_services_type']) ;
         $("#medical_intervention").val(result['medical_intervention']) ; 
-        $("#Intervention_type").val(result['medical_intervention_details']) ;
+        $("#medical_intervention_details").val(result['medical_intervention_details']) ;
         $("#benefits_from_adaptation").val(result['benefits_from_adaptation']) ;
-        $("#Conditioning_type").val(result['adaptation_type']) ;
+        $("#adaptation_type").val(result['adaptation_type']) ;
       },
       error: function(jqXHR, textStatus, errorThrown) {
         // Code to run if the request fails
@@ -101,10 +102,47 @@ $(document).ready(function () {
       },
       complete: function(jqXHR, textStatus) {
         // Code to run after the request finishes (regardless of success/error)
-        console.log("Request complete");
+        // console.log("Request complete");
       }
     });
 
+    $("#update_student_sbmt").click(function () {
+
+      var student_id = $("#s_id").val();
+
+      var form = document.getElementById("student_form");
+      if (!form.checkValidity()) {
+        // This triggers the browser’s built-in HTML5 validation messages
+        form.reportValidity();
+        return; // Stop here if invalid
+      }
+
+      var $this = $(this);
+      $this.prop("disabled", true);
+      $this.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري التحديث ...');
+      
+      // ajax requset to edit dtuent
+      $.ajax({
+        url: "/student/"+ student_id +"/update",
+        type: "POST",
+        data : $("#student_form").serialize(),
+        success: function(result) {
+      
+          console.log(result) ;
+          if (result.status) {
+              alert(result.message); // or toast
+              location.reload();
+          } else {
+              alert(result.message);
+          }
+         
+
+        }
+
+      });
+      
+
+    })
     
   }) ;
 

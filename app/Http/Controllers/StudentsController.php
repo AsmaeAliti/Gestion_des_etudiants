@@ -38,25 +38,25 @@ class StudentsController extends Controller
 
             // Insert the student record
             $studentId = DB::table('students')->insertGetId([
-                'first_name' => $request->First_name,
-                'last_name' => $request->Last_name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'gender' => $request->gender ,
-                'birth_date' => $request->Birth_date,
+                'birth_date' => $request->birth_date,
                 'birth_place' => $request->birth_place,
-                'age' => $request->Age ?? 0,
-                'massar_code' => $request->Massar_code,
+                'age' => $request->age ?? 0,
+                'massar_code' => $request->massar_code,
                 'education_level' => $request->education_level,
-                'inclusive_teacher' => $request->Integrated_teacher,
+                'inclusive_teacher' => $request->inclusive_teacher,
                 'organization_id' => $request->inclusive_organization ?? null,
-                'disability_type' => $request->Disability_type,
+                'disability_type' => $request->disability_type,
                 'disability_degree' => $request->disability_degree ?? '0',
                 'companian_need' => $request->companian_need ?? 'N',
-                'room_service_hours' => $request->Hours_number ?? 0,
-                'cognitive_services_type' => $request->Stervices_provided_type,
+                'room_service_hours' => $request->room_service_hours ?? 0,
+                'services_provided_type' => $request->services_provided_type,
                 'medical_intervention' => $request->medical_intervention,
-                'medical_intervention_details' => $request->Intervention_type ?? null,
+                'medical_intervention_details' => $request->medical_intervention_details ?? null,
                 'benefits_from_adaptation' => !empty($request->benefits_from_adaptation) ? 1 : 0,
-                'adaptation_type' => $request->Conditioning_type ?? null,
+                'adaptation_type' => $request->adaptation_type ?? null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -98,21 +98,48 @@ class StudentsController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id){
-        $studebt_info = DB::table("students")->Where("id", $id)->first() ;
-        Log::info("testing edit function") ;
-        Log::info("Student id is #". $id) ;
-        return $studebt_info ;
+        
+        $student_info = DB::table("students")->Where("id", $id)->first() ;
+        return $student_info ;
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, string $id){
+
+        Log::info("update info of the id #". $id) ;
+        
+        try{
+
+            $student = DB::table('students')->where('id', $id)->first();
+            
+            if (!$student) {
+                return response()->json(['status' => false, 'message' => 'لم يتم العثور على الطالب المحدد' ]);
+            }
+
+            $student_full_name = $student->first_name . " ". $student->last_name ; 
+            $update_student = DB::table('students')->where('id', $id)->update($request->except('_token', 's_id'));
+
+            if ($update_student){
+                return response()->json(['status' => true, 'message' => 'تم تحديث بيانات الطالب(ة): ' . $student_full_name . ' بنجاح' ]);
+            } 
+
+
+            return response()->json([ 'status' => false, 'message' => 'لم يتم تعديل أي بيانات']);
+
+        } catch (\Exception $e) {
+          
+            // Log error
+            Log::error('Error updating student', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
+
+            return response()->json([ 'status' => false, 'message' => '(ة)حدث خطأ أثناء تحديث بيانات الطالب']);
+        }
     }
 
     public function change_status(Request $request){
+
         Log::info("Called change_status with data: ", $request->all());
 
         try{

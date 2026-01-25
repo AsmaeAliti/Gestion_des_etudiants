@@ -31,7 +31,7 @@ return new class extends Migration
             $table->enum('companian_need', ['N', 'Y'])->default('N'); // الحاجة إلى مرافق
 
             $table->integer('room_service_hours')->nullable();
-            $table->string('cognitive_services_type')->nullable();
+            $table->string('services_provided_type')->nullable();
             $table->string('medical_intervention')->nullable();
             $table->string('medical_intervention_details')->nullable();
             $table->boolean('benefits_from_adaptation')->default(false);

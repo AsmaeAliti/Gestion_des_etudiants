@@ -151,6 +151,7 @@
               <div class="card mb-6 border-0 shadow-sm overflow-hidden">
                 <div class="card-header bg-blue-100 text-blue-900 fw-semibold text-center">
                   <i class="fa-solid fa-address-card me-2"></i> المعلومات الشخصية
+                  <input type="hidden" name="s_id" id="s_id">
                 </div>
                 
                 <div class="card-body bg-blue-50 px-4 py-4 rounded-bottom">
@@ -160,15 +161,15 @@
                       <label for="massar_code" class="form-label fw-medium text-gray-700">
                         رمز مسار :
                       </label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="massar_code" name="Massar_code" required>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="massar_code" name="massar_code" required>
                     </div>
 
                     <!-- First Name -->
                     <div class="col-md-4">
-                      <label for="First_name" class="form-label fw-medium text-gray-700">
+                      <label for="first_name" class="form-label fw-medium text-gray-700">
                         الاسم :
                       </label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="First_name" name="First_name" required>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="first_name" name="first_name" required>
                     </div>
 
                     <!-- Last Name -->
@@ -176,15 +177,15 @@
                       <label for="last_name" class="form-label fw-medium text-gray-700">
                         النسب :
                       </label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="last_name" name="Last_name" required>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="last_name" name="last_name" required>
                     </div>
 
-                    <!-- Age -->
+                    <!-- age -->
                     <div class="col-md-4">
                       <label for="age" class="form-label fw-medium text-gray-700">
                         السن :
                       </label>
-                      <input type="number" class="form-control form-control-sm rounded-xl" id="age" name="Age" value="0">
+                      <input type="number" class="form-control form-control-sm rounded-xl" id="age" name="age" value="0">
                     </div>
 
                     <!-- Birth Date -->
@@ -192,7 +193,7 @@
                       <label for="birth_date" class="form-label fw-medium text-gray-700">
                         تاريخ الازدياد :
                       </label>
-                      <input type="date" class="form-control form-control-sm rounded-xl" id="birth_date" name="Birth_date" required>
+                      <input type="date" class="form-control form-control-sm rounded-xl" id="birth_date" name="birth_date" required>
                     </div>
 
                     <!-- Birth Place -->
@@ -246,8 +247,8 @@
                       <input type="text" class="form-control form-control-sm rounded-xl" id="education_level" name="education_level" required>
                     </div>
                     <div class="col-md-4">
-                      <label for="Integrated_teacher" class="form-label fw-medium text-gray-700">الأستاذ(ة) الدامج(ة) :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Integrated_teacher" name="Integrated_teacher" required>
+                      <label for="inclusive_teacher" class="form-label fw-medium text-gray-700">الأستاذ(ة) الدامج(ة) :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="inclusive_teacher" name="inclusive_teacher" required>
                     </div>
                   </div>
                 </div>
@@ -260,7 +261,7 @@
                   <div class="row g-3">
                     <div class="col-md-4">
                       <label for="disability_type" class="form-label fw-medium text-gray-700">نوع الإعاقة :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="disability_type" name="Disability_type" required>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="disability_type" name="disability_type" required>
                     </div>
                     <div class="col-md-4">
                       <label for="disability_degree" class="form-label fw-medium text-gray-700">درجة الإعاقة :</label>
@@ -295,28 +296,28 @@
                 <div class="card-body bg-purple-50">
                   <div class="row g-3">
                     <div class="col-md-6">
-                      <label for="Hours_number" class="form-label fw-medium text-gray-700">عدد ساعات الاستفادة :</label>
-                      <input type="number" class="form-control form-control-sm rounded-xl" id="Hours_number" name="Hours_number" value="0" >
+                      <label for="room_service_hours" class="form-label fw-medium text-gray-700">عدد ساعات الاستفادة :</label>
+                      <input type="number" class="form-control form-control-sm rounded-xl" id="room_service_hours" name="room_service_hours" value="0" >
                     </div>
                     <div class="col-md-6">
-                      <label for="Stervices_provided_type" class="form-label fw-medium text-gray-700">نوع الخدمات المقدمة :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Stervices_provided_type" name="Stervices_provided_type" required>
+                      <label for="services_provided_type" class="form-label fw-medium text-gray-700">نوع الخدمات المقدمة :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="services_provided_type" name="services_provided_type" required>
                     </div>
                     <div class="col-md-6">
                       <label for="medical_intervention" class="form-label fw-medium text-gray-700">التدخل الطبي / الشبه الطبي :</label>
                       <input type="text" class="form-control form-control-sm rounded-xl" id="medical_intervention" name="medical_intervention" required>
                     </div>
                     <div class="col-md-6">
-                      <label for="Intervention_type" class="form-label fw-medium text-gray-700">نوعه والجهة المتدخلة :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Intervention_type" name="Intervention_type">
+                      <label for="medical_intervention_details" class="form-label fw-medium text-gray-700">نوعه والجهة المتدخلة :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="medical_intervention_details" name="medical_intervention_details">
                     </div>
                     <div class="col-md-6">
                       <label for="benefits_from_adaptation" class="form-label fw-medium text-gray-700">الاستفادة من التكييف ونوعه :</label>
                       <input type="text" class="form-control form-control-sm rounded-xl" id="benefits_from_adaptation" name="benefits_from_adaptation">
                     </div>
                     <div class="col-md-6">
-                      <label for="Conditioning_type" class="form-label fw-medium text-gray-700">طبيعة التكييف الممنوح :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="Conditioning_type" name="Conditioning_type">
+                      <label for="adaptation_type" class="form-label fw-medium text-gray-700">طبيعة التكييف الممنوح :</label>
+                      <input type="text" class="form-control form-control-sm rounded-xl" id="adaptation_type" name="adaptation_type">
                     </div>
                   </div>
                 </div>
