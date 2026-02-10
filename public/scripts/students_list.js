@@ -83,7 +83,7 @@ $(document).ready(function () {
         $("#birth_date").val(result['birth_date']) ;
         $("#birth_place").val(result['birth_place']) ; 
         $('input[name="gender"][value="' + result['gender'] + '"]').prop('checked', true);
-        $("#inclusive_organization").val(result['inclusive_organization']) ; 
+        $("#inclusive_organization").val(result['organization_id']) ; 
         $("#education_level").val(result['education_level']) ; 
         $("#inclusive_teacher").val(result['inclusive_teacher']) ;
         $("#disability_type").val(result['disability_type']) ;

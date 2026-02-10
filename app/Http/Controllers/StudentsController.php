@@ -89,9 +89,13 @@ class StudentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function view_student($id)
     {
         //
+        $student = DB::table("students")->Where("id", $id)->first() ;
+
+        return view('student.view', compact('student'));
+
     }
 
     /**
@@ -110,7 +114,7 @@ class StudentsController extends Controller
     public function update(Request $request, string $id){
 
         Log::info("update info of the id #". $id) ;
-        
+
         try{
 
             $student = DB::table('students')->where('id', $id)->first();
@@ -120,7 +124,12 @@ class StudentsController extends Controller
             }
 
             $student_full_name = $student->first_name . " ". $student->last_name ; 
-            $update_student = DB::table('students')->where('id', $id)->update($request->except('_token', 's_id'));
+           
+            // $organisaion_name
+            $new_data = $request->except('_token', 's_id', 'inclusive_organization') ;
+            $new_data['organization_id'] = $request->inclusive_organization ;
+            
+            $update_student = DB::table('students')->where('id', $id)->update($new_data);
 
             if ($update_student){
                 return response()->json(['status' => true, 'message' => 'تم تحديث بيانات الطالب(ة): ' . $student_full_name . ' بنجاح' ]);

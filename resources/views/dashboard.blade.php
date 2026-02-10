@@ -9,15 +9,19 @@
 
 
     @section('header')
-      <div class="d-flex justify-between ">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('جدول تتبع التلاميذ') }}
-        </h2>
-        <div data-bs-toggle="modal" data-bs-target="#StoreStudents" id="add_student" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600 text-white font-medium text-sm shadow hover:bg-green-700 hover:shadow-md transition cursor-pointer">
-            <i class="fa-solid fa-user-plus text-sm"></i> إضافة تلميذ(ة)
-        </div>
+    <header class="bg-white shadow">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="d-flex justify-between ">
+          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('جدول تتبع التلاميذ') }}
+          </h2>
+          <div data-bs-toggle="modal" data-bs-target="#StoreStudents" id="add_student" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-600 text-white font-medium text-sm shadow hover:bg-green-700 hover:shadow-md transition cursor-pointer">
+              <i class="fa-solid fa-user-plus text-sm"></i> إضافة تلميذ(ة)
+          </div>
 
+        </div>
       </div>
+    </header>
     @endsection
     
 
@@ -105,9 +109,9 @@
               <td>
 
                 <!-- View Button -->
-                <button class="inline-flex items-center justify-center w-9 h-9 rounded-xl  bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">
+                <a href="{{ url('/student/' . $student->id . '/view_student') }}" class="inline-flex items-center justify-center w-9 h-9 rounded-xl  bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">
                     <i class="fa-solid fa-eye text-sm"></i>
-                </button>
+                </a>
 
                 <!-- Edit Button -->
                 <button href="{{ url('/student/' . $student->id . '/edit') }}" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">
