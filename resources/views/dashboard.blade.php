@@ -27,6 +27,7 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-12">
     
+      <div id="ajax_message"></div>
       @if (session('success'))
         <div class="alert alert-success text-center"><i class="fa-solid fa-square-check"></i> {{ session('success') }} </div>
       @endif
@@ -316,8 +317,11 @@
                       <input type="text" class="form-control form-control-sm rounded-xl" id="medical_intervention_details" name="medical_intervention_details">
                     </div>
                     <div class="col-md-6">
-                      <label for="benefits_from_adaptation" class="form-label fw-medium text-gray-700">الاستفادة من التكييف ونوعه :</label>
-                      <input type="text" class="form-control form-control-sm rounded-xl" id="benefits_from_adaptation" name="benefits_from_adaptation">
+                      <label for="benefits_from_adaptation" class="form-label fw-medium text-gray-700">الاستفادة من التكييف :</label>
+                      <select class="form-select form-select-sm rounded-xl" name="benefits_from_adaptation" id="benefits_from_adaptation">
+                        <option value="0" selected>لا</option>
+                        <option value="1">نعم</option>
+                      </select>
                     </div>
                     <div class="col-md-6">
                       <label for="adaptation_type" class="form-label fw-medium text-gray-700">طبيعة التكييف الممنوح :</label>

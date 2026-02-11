@@ -89,12 +89,16 @@ class StudentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function view_student($id)
-    {
-        //
-        $student = DB::table("students")->Where("id", $id)->first() ;
+    public function view_student($id){
+        
+        Log::info("View info of the id #". $id) ;
 
-        return view('student.view', compact('student'));
+        $student = DB::table("students")->Where("id", $id)->first() ;
+        $organizations = DB::table('inclusive_organization')
+            ->pluck('organization_name','id')->toArray();
+
+
+        return view('student.view', compact('student', 'organizations'));
 
     }
 

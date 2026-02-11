@@ -90,7 +90,7 @@ $(document).ready(function () {
         $("#disability_degree").val(result['disability_degree']) ; 
         $('input[name="companian_need"][value="' + result['companian_need'] + '"]').prop('checked', true);
         $("#room_service_hours").val(result['room_service_hours']) ;
-        $("#services_provided_type").val(result['cognitive_services_type']) ;
+        $("#services_provided_type").val(result['services_provided_type']) ;
         $("#medical_intervention").val(result['medical_intervention']) ; 
         $("#medical_intervention_details").val(result['medical_intervention_details']) ;
         $("#benefits_from_adaptation").val(result['benefits_from_adaptation']) ;
@@ -128,13 +128,23 @@ $(document).ready(function () {
         data : $("#student_form").serialize(),
         success: function(result) {
       
-          console.log(result) ;
           if (result.status) {
-              alert(result.message); // or toast
-              location.reload();
+        
+            $("#ajax_message").html(
+                `<div class="alert alert-success text-center">
+                    <i class="fa-solid fa-square-check"></i> ${result.message}
+                </div>`
+            );
+
           } else {
-              alert(result.message);
+            $("#ajax_message").html(
+                `<div class="alert alert-danger text-center">
+                    <i class="fa-solid fa-triangle-exclamation"></i> ${result.message}
+                </div>`
+            );
           }
+          // HIDE MODAL 
+          $("#StoreStudents").modal('hide');
          
 
         }

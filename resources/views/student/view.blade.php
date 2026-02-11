@@ -6,7 +6,8 @@
         body * {
             visibility: hidden;
         }
-        #student-card, #student-card * {
+        /* show all except for the print button */
+        #student-card, #student-card *:not(#print_button) {
             visibility: visible;
         }
         #student-card {
@@ -24,7 +25,7 @@
 
 
 
-    <div class="container mx-auto my-12 px-4">
+    <div class="container mx-auto mt-8 px-4">
 
         <!-- Student Info Card -->
         <div class="bg-white shadow-xl rounded-3xl overflow-hidden max-w-4xl mx-auto border border-gray-200" id="student-card">
@@ -40,7 +41,7 @@
                 </div>
 
                 <!-- Placeholder for print button later -->
-                <button onclick="window.print()" class="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg hover:bg-gray-100">
+                <button onclick="window.print()" class="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg hover:bg-gray-100" id="print_button">
                     <i class="fa-solid fa-print"></i> طباعة
                 </button>
             </div>
@@ -78,6 +79,30 @@
                         </div>
                     </div>
 
+                    <!-- Disability Info -->
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-lg text-amber-600 border-b border-amber-200 pb-1">الإعاقة</h4>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-wheelchair text-amber-500"></i>
+                            <span>نوع الإعاقة: {{ $student->disability_type ?? '—' }}</span>
+                        </div>
+                        <div class="flex items-center justify-start">
+                            <span>درجة الإعاقة: 
+                            @php
+                                $labels = [
+                                    '0' => 'خفيفة',
+                                    '1' => 'متوسطة',
+                                    '2' => 'عميقة',
+                                    '3' => 'متطورة',
+                                ];
+                            @endphp
+                            {{ $labels[$student->disability_degree] ?? 'غير محدد' }}
+
+                            </span>
+                            <span class="badge {{ $student->companian_need == 'Y' ? 'bg-success' : 'bg-secondary' }} px-3 py-1 rounded-full ms-3">مرافق: {{ $student->companian_need == 'Y' ? 'نعم' : 'لا' }}</span>
+                        </div>
+                    </div>
+
                     <!-- Academic Info -->
                     <div class="space-y-4">
                         <h4 class="font-semibold text-lg text-emerald-600 border-b border-emerald-200 pb-1">المعلومات الدراسية</h4>
@@ -89,18 +114,9 @@
                             <i class="fa-solid fa-chalkboard-user text-emerald-500"></i>
                             <span>الأستاذ(ة) الدامج(ة): {{ $student->inclusive_teacher ?? '—' }}</span>
                         </div>
-                    </div>
-
-                    <!-- Disability Info -->
-                    <div class="space-y-4">
-                        <h4 class="font-semibold text-lg text-amber-600 border-b border-amber-200 pb-1">الإعاقة</h4>
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-wheelchair text-amber-500"></i>
-                            <span>نوع الإعاقة: {{ $student->disability_type ?? '—' }}</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span>درجة الإعاقة: {{ $degrees[$student->disability_degree] ?? '—' }}</span>
-                            <span class="badge {{ $student->companian_need == 'Y' ? 'bg-success' : 'bg-secondary' }} px-3 py-1 rounded-full">مرافق: {{ $student->companian_need == 'Y' ? 'نعم' : 'لا' }}</span>
+                         <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-chalkboard-user text-emerald-500"></i>
+                            <span>المؤسسة الدامجة : {{ $organizations[$student->organization_id] ?? '—' }}</span>
                         </div>
                     </div>
 
