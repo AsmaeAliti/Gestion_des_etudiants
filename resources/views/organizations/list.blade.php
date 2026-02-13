@@ -62,12 +62,12 @@
               <td>
                 
                 <!-- Edit Button -->
-                <button href="{{ url('/organization/' . $organization->id . '/edit') }}" data-bs-toggle="modal" data-bs-target="#StoreOrganization" class="edit_organization inline-flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition shadow-sm">
+                <button href="{{ url('/organization/' . $organization->id . '/edit') }}" data-id="{{$organization->id}}" data-bs-toggle="modal" data-bs-target="#StoreOrganization" class="edit_organization inline-flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500 text-white hover:bg-amber-600 transition shadow-sm">
                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                 </button>
 
                 <!-- Delete Button -->
-                <button data-bs-toggle="modal" data-bs-target="#changeStatus" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm">
+                <button data-bs-toggle="modal" data-bs-target="#changeStatus" data-id="{{$organization->id}}" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm">
                     <i class="fa-solid fa-trash-can text-sm"></i>
                 </button>
 
@@ -89,6 +89,7 @@
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">إضافة رافد</h1>
                 <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                <input type="hidden" class="form-control" id="o_id" name="o_id">
               </div>
 
               <div class="modal-body p-0">
@@ -108,7 +109,8 @@
 
               <div class="modal-footer">
                   <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> إغلاق</button>
-                  <button type="submit" class="btn btn-sm btn-outline-primary" id="store_organization_btn"><i class="fa-solid fa-plus"></i> إضافة  </button>
+                  <button type="submit" id="add_organization_sbmt" class="btn btn-sm btn-outline-primary" id="store_organization_btn"><i class="fa-solid fa-plus"></i> إضافة  </button>
+                  <button type="button" id="update_organization_sbmt" class="btn btn-sm btn-outline-warning" id="store_organization_btn"><i class="fa-solid fa-pen-to-square"></i> تحديث  </button>
               </div>
             </form>
 
@@ -133,7 +135,7 @@
 
                 <div class="alert alert-danger text-center mb-0">
                   <i class="fa-solid fa-triangle-exclamation"></i> 
-                  <b>تنبيه :</b>  بتغيير الحالة، سيتم تعطيل حالة طلاب هذه الرافد تلقائيًا.
+                  <b>تنبيه :</b> بتغيير الحالة، سيتم تعطيل حالة طلاب هذه الرافد تلقائيًا.
                 </div>
 
                 <input type="hidden" id="change_status_organization_id" name="organization_id" value=""> 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('organization_name'); // الاسم
             $table->integer('female_count'); // مجموع الإناث
             $table->integer('male_count'); // مجموع الذكور
+            $table->enum('active', ['0', '1'])->default('1')->nullable(); // 0: غير نشيط 1: نشيط 
             $table->timestamps();
         });
     }

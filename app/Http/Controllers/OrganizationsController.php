@@ -55,16 +55,6 @@ class OrganizationsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id){
-        
-        $organization_info = DB::table("inclusive_organization")->Where("id", $id)->first() ;
-        return $organization_info ;
-
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id){
@@ -72,9 +62,30 @@ class OrganizationsController extends Controller
         Log::info("update info of the organization id #". $id) ;
 
         try{
+            $organization = DB::table('inclusive_organization')->where('id', $id)->first();
+            
+            if (!$organization) {
+                return response()->json(['status' => false, 'message' => 'لم يتم العثور على الرافد المحدد' ]);
+            }
 
+            $organization_name = $organization->organization_name ; 
+           
+            // $organisaion_name
+            $new_data = $request->except('_token', 'o_id') ;
+            $update_organization = DB::table('inclusive_organization')->where('id', $id)->update($new_data);
+
+            if ($update_organization){
+                return response()->json(['status' => true, 'message' => 'تم تحديث بيانات الرافد: ' . $organization_name . ' بنجاح' ]);
+            } 
+
+
+            return response()->json([ 'status' => false, 'message' => 'لم يتم تعديل أي بيانات']);
         } catch (\Exception $e) {
           
+            // Log error
+            Log::error('Error updating organization', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
+
+            return response()->json([ 'status' => false, 'message' => ' حدث خطأ أثناء تحديث بيانات الرافد']);
         }
     }
 
@@ -87,6 +98,7 @@ class OrganizationsController extends Controller
           $organization_id = $request->organization_id;
           $new_status = $request->new_status;
           DB::table('inclusive_organization')->where('id', $organization_id)->update(['active' => $new_status]);
+          DB::table('students')->where('organization_id', $organization_id)->update(['active' => $new_status]);
 
           session()->flash('success', 'تم تغيير حالة الرافد  بنجاح');
           return redirect()->back();
