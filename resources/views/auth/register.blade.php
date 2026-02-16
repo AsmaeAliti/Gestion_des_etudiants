@@ -1,5 +1,13 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+
+    <div class="mb-3">
+        <a href="/">
+            <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+        </a>
+    </div>
+
+    <hr>
+    <form method="POST" action="{{ route('register') }}" class="mt-3">
         @csrf
 
         <!-- Name -->

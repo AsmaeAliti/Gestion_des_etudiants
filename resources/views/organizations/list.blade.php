@@ -89,7 +89,7 @@
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">إضافة رافد</h1>
                 <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="Close"></button>
-                <input type="hidden" class="form-control" id="o_id" name="o_id">
+                <input type="hidden" class="form-control form-control-sm" id="o_id" name="o_id">
               </div>
 
               <div class="modal-body p-0">
@@ -102,7 +102,7 @@
                 
                 <div class="m-3">
                   <label for="organization_name" class="form-label"> اسم رافد </label>
-                  <input type="text" class="form-control" id="organization_name" name="organization_name">
+                  <input type="text" class="form-control form-control-sm" id="organization_name" name="organization_name">
                 </div>
 
               </div>
