@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/student/{id}/view_student', [StudentsController::class, 'view_student'] );
 
     // Organization
+    Route::get('/organization/{id}/students_details', [OrganizationsController::class, 'students_details'])->name('students.students_details');
     Route::post('/organization/change_status', [OrganizationsController::class, 'change_status'])->name('organization.change_status');
     Route::post('/organization/store', [OrganizationsController::class, 'store'])->name('organization.store');
     Route::post('/organization/{id}/update', [OrganizationsController::class, 'update'])->name('organization.update');

@@ -135,7 +135,8 @@
 
                 <div class="alert alert-danger text-center mb-0">
                   <i class="fa-solid fa-triangle-exclamation"></i> 
-                  <b>تنبيه :</b> بتغيير الحالة، سيتم تعطيل حالة طلاب هذه الرافد تلقائيًا.
+                  <b>تنبيه :</b> بتغيير الحالة، سيتم تعطيل حالة طلاب هذه الرافد تلقائيًا :
+                  <ol class="list-decimal text-end me-5 mt-3" id="students_for_org"></ol>
                 </div>
 
                 <input type="hidden" id="change_status_organization_id" name="organization_id" value=""> 

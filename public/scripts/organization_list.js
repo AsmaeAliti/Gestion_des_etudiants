@@ -47,11 +47,27 @@ $(document).ready(function (){
         
         $("#change_status_organization_id").val(organization_id);
         $("#new_status").val('0'); // تعيين الحالة إلى غير نشيط
-
+        $("#students_for_org").html("")
         var organization_name = $(this).closest("tr").find("td").eq(0).text();
-        console.log(organization_name)
         $("#changeStatus .modal-title").text("تعطيل تسجيل [ "+ organization_name +" ] ");
-        
+
+
+        // ajax requset to students name for this organization
+        $.ajax({
+            url: "/organization/"+ organization_id +"/students_details",
+            type: "GET",
+            success: function(students) {
+                
+                var students_list = "" ;
+                students.forEach(student => {
+                    students_list += "<li><b>#"+ student['massar_code'] +"</b> - "+ student['first_name'] +" "+ student['last_name'] +"</li>" ;
+                });
+                $("#students_for_org").html(students_list) ;
+
+            }
+
+        });
+      
     }) ;
   
     // edit info of the Organization

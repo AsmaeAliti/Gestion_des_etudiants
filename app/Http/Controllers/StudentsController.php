@@ -20,6 +20,7 @@ class StudentsController extends Controller
             ->get();
 
         $organizations = DB::table('inclusive_organization')
+            ->where('active', '1')
             ->select('*')
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -134,6 +135,24 @@ class StudentsController extends Controller
             $new_data['organization_id'] = $request->inclusive_organization ;
             
             $update_student = DB::table('students')->where('id', $id)->update($new_data);
+            
+            if($new_data['organization_id'] !== $student->organization_id ){
+                $female_count_old_org = DB::table("students")->where('organization_id', $student->organization_id)->where('active', '1')->where('gender', 'أنثى')->count() ;
+                $male_count_old_org = DB::table("students")->where('organization_id', $student->organization_id)->where('active', '1')->where('gender', 'ذكر')->count() ;
+                
+                $female_count_new_org = DB::table("students")->where('organization_id', $new_data['organization_id'])->where('active', '1')->where('gender', 'أنثى')->count() ;
+                $male_count_new_org = DB::table("students")->where('organization_id', $new_data['organization_id'])->where('active', '1')->where('gender', 'ذكر')->count() ;
+
+                DB::table("inclusive_organization")->where("id", $student->organization_id)->update([ 'male_count' => $male_count_old_org, 'female_count' => $female_count_old_org ]) ;
+                DB::table("inclusive_organization")->where("id", $new_data['organization_id'])->update([ 'male_count' => $male_count_new_org, 'female_count' => $female_count_new_org ]) ;
+
+            }
+            // for ($i=0; $i < 13; $i++) { 
+            //     $female_count = DB::table("students")->where('organization_id', $i)->where('active', '1')->where('gender', 'أنثى')->count() ;
+            //     $male_count = DB::table("students")->where('organization_id', $i)->where('active', '1')->where('gender', 'ذكر')->count() ;
+            //     DB::table("inclusive_organization")->where("id", $i)->update([ 'male_count' => $male_count, 'female_count' => $female_count ]) ;
+
+            // }
 
             if ($update_student){
                 return response()->json(['status' => true, 'message' => 'تم تحديث بيانات الطالب(ة): ' . $student_full_name . ' بنجاح' ]);

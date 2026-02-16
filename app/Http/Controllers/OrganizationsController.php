@@ -13,9 +13,10 @@ class OrganizationsController extends Controller
      */
     public function list(){
         $organization_data = DB::table('inclusive_organization')
-              ->select('*', DB::raw('female_count + male_count as total_members'))
-              ->orderBy('created_at', 'DESC')
-              ->get();
+            ->Where('active', '1')
+            ->select('*', DB::raw('female_count + male_count as total_members'))
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         // Log::info($organization_data);
         return view('organizations.list', compact('organization_data'));
@@ -25,7 +26,7 @@ class OrganizationsController extends Controller
       
         try {
             
-        Log::info($request->all());
+            Log::info($request->all());
 
             // Insert the student record
             $organizationId = DB::table('inclusive_organization')->insertGetId([
@@ -53,6 +54,21 @@ class OrganizationsController extends Controller
             return redirect()->back();
         }
     }
+
+    // get the users deatils basedon the orgaization 
+    public function students_details($id) {
+
+        $students_list = DB::table("students")
+            ->Where("organization_id", $id)
+            ->Where("active", '1')
+            ->select("massar_code", "first_name", "last_name")
+            ->get() ;
+
+        Log::info($students_list) ;
+
+        return $students_list; 
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -84,7 +100,6 @@ class OrganizationsController extends Controller
           
             // Log error
             Log::error('Error updating organization', [ 'error' => $e->getMessage() , 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile() ]);
-
             return response()->json([ 'status' => false, 'message' => ' حدث خطأ أثناء تحديث بيانات الرافد']);
         }
     }
@@ -95,20 +110,24 @@ class OrganizationsController extends Controller
 
         try{
         
-          $organization_id = $request->organization_id;
-          $new_status = $request->new_status;
-          DB::table('inclusive_organization')->where('id', $organization_id)->update(['active' => $new_status]);
-          DB::table('students')->where('organization_id', $organization_id)->update(['active' => $new_status]);
+            $organization_id = $request->organization_id;
+            $new_status = $request->new_status;
+            
+            // deactiavte the organization status  
+            DB::table('inclusive_organization')->where('id', $organization_id)->update(['active' => $new_status]);
+            
+            // deactivate all the student with the affected organization 
+            DB::table('students')->where('organization_id', $organization_id)->update(['active' => $new_status]);
 
-          session()->flash('success', 'تم تغيير حالة الرافد  بنجاح');
-          return redirect()->back();
+            session()->flash('success', 'تم تغيير حالة الرافد  بنجاح');
+            return redirect()->back();
 
         } catch(\Exception $e){
 
-          Log::error('Error changing organization status', [ 'error' => $e->getMessage(), 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile()  ]);
-         
-          session()->flash('danger', ' حدث خطأ أثناء تغيير حالة الرافد ' );
-          return redirect()->back();
+            Log::error('Error changing organization status', [ 'error' => $e->getMessage(), 'Error Line ' => $e->getLine(), 'Error File' => $e->getFile()  ]);
+            
+            session()->flash('danger', ' حدث خطأ أثناء تغيير حالة الرافد ' );
+            return redirect()->back();
         }
 
     }

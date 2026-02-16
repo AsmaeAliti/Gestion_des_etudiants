@@ -62,13 +62,15 @@ $(document).ready(function () {
 
     // hide add student button 
     $("#add_student_sbmt").hide() ;
-    $("#update_student_sbmt").show() ;
+    $("#update_student_sbmt").show().prop("disabled", false) ;
+    $("#update_student_sbmt").html('<i class="fa-solid fa-user-pen"></i> تحديث');
 
     var student_first_name = $(this).closest("tr").find("td").eq(0).text();
     var student_last_name = $(this).closest("tr").find("td").eq(1).text();
 
     $("#StoreStudents .modal-title").text("تحديث معلومات [ "+ student_first_name + " " + student_last_name +" ] ");
     
+
     // ajax requset to edit dtuent
     $.ajax({
       url: "/student/"+ student_id +"/edit",
@@ -105,55 +107,55 @@ $(document).ready(function () {
         // console.log("Request complete");
       }
     });
+  }) ;
 
-    $("#update_student_sbmt").click(function () {
+  $("#update_student_sbmt").click(function () {
 
-      var student_id = $("#s_id").val();
+    var student_id = $("#s_id").val();
 
-      var form = document.getElementById("student_form");
-      if (!form.checkValidity()) {
-        // This triggers the browser’s built-in HTML5 validation messages
-        form.reportValidity();
-        return; // Stop here if invalid
+    var form = document.getElementById("student_form");
+    if (!form.checkValidity()) {
+      // This triggers the browser’s built-in HTML5 validation messages
+      form.reportValidity();
+      return; // Stop here if invalid
+    }
+
+    var $this = $(this);
+    $this.prop("disabled", true);
+    $this.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري التحديث ...');
+    
+    // ajax requset to edit dtuent
+    $.ajax({
+      url: "/student/"+ student_id +"/update",
+      type: "POST",
+      data : $("#student_form").serialize(),
+      success: function(result) {
+        console.log(result)
+        if (result.status) {
+      
+          $("#ajax_message").html(
+              `<div class="alert alert-success text-center">
+                  <i class="fa-solid fa-square-check"></i> ${result.message}
+              </div>`
+          );
+
+        } else {
+          $("#ajax_message").html(
+              `<div class="alert alert-danger text-center">
+                  <i class="fa-solid fa-triangle-exclamation"></i> ${result.message}
+              </div>`
+          );
+        }
+        // HIDE MODAL 
+        $("#StoreStudents").modal('hide');
+        
+
       }
 
-      var $this = $(this);
-      $this.prop("disabled", true);
-      $this.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جاري التحديث ...');
-      
-      // ajax requset to edit dtuent
-      $.ajax({
-        url: "/student/"+ student_id +"/update",
-        type: "POST",
-        data : $("#student_form").serialize(),
-        success: function(result) {
-      
-          if (result.status) {
-        
-            $("#ajax_message").html(
-                `<div class="alert alert-success text-center">
-                    <i class="fa-solid fa-square-check"></i> ${result.message}
-                </div>`
-            );
-
-          } else {
-            $("#ajax_message").html(
-                `<div class="alert alert-danger text-center">
-                    <i class="fa-solid fa-triangle-exclamation"></i> ${result.message}
-                </div>`
-            );
-          }
-          // HIDE MODAL 
-          $("#StoreStudents").modal('hide');
-         
-
-        }
-
-      });
-      
-
-    })
+    });
     
-  }) ;
+
+  })
+    
 
 }) ;
