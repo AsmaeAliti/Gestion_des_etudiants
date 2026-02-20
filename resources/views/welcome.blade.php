@@ -6,8 +6,8 @@
 
         <title>{{ config('app.name', 'GTE') }}</title>
 
-        <script src="{{ asset('js/tailwindcss_3.min.js') }}" defer></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
       
     </head>
     <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">

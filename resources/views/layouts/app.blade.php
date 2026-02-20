@@ -7,14 +7,13 @@
 
         <title>{{ config('app.name', ' GDE') }} - لوحة التحكم</title>
 
-        <!-- Tailwind CSS CDN -->
-        <script src="{{ asset('js/tailwindcss_3.min.js') }}" defer></script>
-        <!-- Scripts -->
-        <link rel="stylesheet" href="{{-- asset('css/app.css') --}}">
+        <!-- Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/Bootstrap5_3.min.css') }}">
         <!-- font-awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
-        
+        <!-- Tailwind -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         @yield('styles')
 
     </head>
@@ -36,7 +35,6 @@
 
     </body>
 
-    <script src="{{-- asset('js/app.js') --}}" defer></script>
     
     <!-- Alpine.js CDN (needed for Breeze interactions) -->
     <script src="{{ asset('js/alpinejs3.min.js') }}" defer></script>
