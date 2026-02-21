@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
-@section('styles')
-@endsection
+@section('title',  config("app.name", " GDE").' - لوحة الإحصائيات')
 
 @section('content')
 <div>
@@ -24,8 +22,8 @@
                             عدد التلاميذ بناءً على الروافد
                         </h6>
                     </div>
-                    <div class="card-body p-4">
-                        <canvas id="BarChart" height="250"></canvas>
+                    <div class="card-body p-4" style="height: 300px;">
+                        <canvas id="BarChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -38,8 +36,8 @@
                             توزيع التلاميذ حسب الجنس
                         </h6>
                     </div>
-                    <div class="card-body p-4 d-flex align-items-center justify-content-center">
-                        <canvas id="PieChart" height="250"></canvas>
+                    <div class="card-body p-4 d-flex align-items-center justify-content-center" style="height: 300px;">
+                        <canvas id="PieChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -52,8 +50,8 @@
                             عدد التلاميذ حسب نوع الإعاقة
                         </h6>
                     </div>
-                    <div class="card-body p-4">
-                        <canvas id="LineChart" height="250"></canvas>
+                    <div class="card-body p-4" style="height: 300px;">
+                        <canvas id="LineChart"></canvas>
                     </div>
                 </div>
             </div>
