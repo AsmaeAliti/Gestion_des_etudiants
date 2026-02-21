@@ -1,3 +1,5 @@
+@section('title',  config("app.name", " GDE").' - تسجيل الدخول')
+
 <x-guest-layout>
 
     <div class="mb-3">

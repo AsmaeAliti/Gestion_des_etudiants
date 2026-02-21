@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title',  config("app.name", " GDE").' - قائمة التلاميذ')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">

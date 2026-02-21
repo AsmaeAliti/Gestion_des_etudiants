@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', ' GDE') }} - لوحة التحكم</title>
+        <title>@yield('title')</title>
+        <link rel="icon" type="image/svg+xml" href="{{ asset('/imgs/favicon.svg') }}">
 
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/Bootstrap5_3.min.css') }}">
@@ -17,8 +18,8 @@
         @yield('styles')
 
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 pb-5">
+    <body class="font-sans antialiased d-flex flex-column min-vh-100">
+        <div class="bg-gray-100 pb-5 flex-fill">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
