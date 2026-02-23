@@ -11,13 +11,23 @@ class StudentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-        $students_data = DB::table('students')
-            ->leftJoin('inclusive_organization', 'students.organization_id', '=', 'inclusive_organization.id')
-            ->where('students.active', '1')
-            ->select('students.*', 'inclusive_organization.organization_name')
-            ->orderBy('students.created_at', 'DESC')
-            ->get();
+    public function index(Request $request){
+
+        $includeInactive = request('include_inactive_students') ?? 'off'; // on OR off
+
+        if($request->ajax()){
+            
+            $all_students = DB::table('students')
+                ->leftJoin('inclusive_organization', 'students.organization_id', '=', 'inclusive_organization.id')
+                ->select('students.*', 'inclusive_organization.organization_name')
+                ->orderBy('students.created_at', 'DESC');
+
+            if( $includeInactive != 'on' ) $students_data = $all_students->where('students.active', '1')->get() ;
+            else $students_data = $all_students->get() ;
+
+            return response()->json([ 'data' => $students_data ]) ;
+        }
+        
 
         $organizations = DB::table('inclusive_organization')
             ->where('active', '1')
@@ -25,8 +35,7 @@ class StudentsController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        // Log::info($students_data);
-        return view('dashboard', compact('students_data', 'organizations'));
+        return view('dashboard', compact('organizations'));
     }
 
     /**

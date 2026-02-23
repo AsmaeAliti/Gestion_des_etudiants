@@ -71,65 +71,10 @@
               <th scope="col" style="width: 100px !important;"></th>
             </tr>
         </thead>
+        
         <tbody>
-          @foreach($students_data as $student)
-            <tr>
-              <th class="text-center">{{ $student->id }}</th>
-              <td>{{ $student->first_name }}</td>
-              <td>{{ $student->last_name }}</td>
-              <td>{{ $student->gender }}</td>
-              <td>{{ $student->age }}</td>
-              <td>{{ $student->massar_code }}</td>
-              <td>{{ $student->education_level }}</td>
-              <td>{{ $student->inclusive_teacher }}</td>
-              <td>{{ $student->disability_type }}</td>
-              <td class="text-center">
-                  @php
-                      $degree = $student->disability_degree;
-
-                      $styles = [
-                          '0' => 'bg-green-100 text-green-800 border border-green-300',
-                          '1' => 'bg-yellow-100 text-yellow-800 border border-yellow-300',
-                          '2' => 'bg-orange-100 text-orange-800 border border-orange-300',
-                          '3' => 'bg-red-100 text-red-800 border border-red-300',
-                      ];
-
-                      $labels = [
-                          '0' => 'خفيفة',
-                          '1' => 'متوسطة',
-                          '2' => 'عميقة',
-                          '3' => 'متطورة',
-                      ];
-                  @endphp
-
-                  <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $styles[$degree] ?? 'bg-gray-100 text-gray-700' }}">
-                      {{ $labels[$degree] ?? 'غير محدد' }}
-                  </span>
-              </td>
-
-              <td class="text-center">{{ ( $student->companian_need == 'Y' ? 'نعم' : 'لا' ) }}</td>
-              <td>
-
-                <!-- View Button -->
-                <a href="{{ url('/student/' . $student->id . '/view_student') }}" class="inline-flex items-center justify-center w-9 h-9 rounded-xl  bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">
-                    <i class="fa-solid fa-eye text-sm"></i>
-                </a>
-
-                <!-- Edit Button -->
-                <button href="{{ url('/student/' . $student->id . '/edit') }}" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">
-                    <i class="fa-solid fa-pen-to-square text-sm"></i>
-                </button>
-
-                <!-- Delete Button -->
-                <button data-bs-toggle="modal" data-bs-target="#changeStatus" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm">
-                    <i class="fa-solid fa-trash-can text-sm"></i>
-                </button>
-
-            </td>
-
-            </tr>
-          @endforeach
         </tbody>
+
       </table>
     </div>
     

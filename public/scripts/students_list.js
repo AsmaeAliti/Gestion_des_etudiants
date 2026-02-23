@@ -1,11 +1,102 @@
 $(document).ready(function () {
 
   var students_list = new DataTable('#students_list', {
-    language: {
-        url: '/js/datatable-ar.json',
-    }}
-  );
+    
+      language: {
+          url: '/js/datatable-ar.json',
+      },
+      processing: true,
+      ajax: '/dashboard',
+      createdRow: function(row, data, dataIndex) {
+          if (data.active == 0) {
+              $(row).find('td').css('background-color', '#ffc9c9'); // Tailwind red-100  
+          }
+      },
+      columns: [
+          { data: 'id', className: 'text-center fw-bold' },
+          { data: 'first_name' },
+          { data: 'last_name' },
+          { data: 'gender' },
+          { data: 'age' },
+          { data: 'massar_code' },
+          { data: 'education_level' },
+          { data: 'inclusive_teacher' },
+          { data: 'disability_type' },
 
+          // Disability Degree Badge
+          { data: 'disability_degree', className: 'text-center', 
+            render: function(data) {
+
+                const styles = {
+                    '0': 'bg-green-100 text-green-800 border border-green-300',
+                    '1': 'bg-yellow-100 text-yellow-800 border border-yellow-300',
+                    '2': 'bg-orange-100 text-orange-800 border border-orange-300',
+                    '3': 'bg-red-100 text-red-800 border border-red-300'
+                };
+
+                const labels = {
+                    '0': 'خفيفة',
+                    '1': 'متوسطة',
+                    '2': 'عميقة',
+                    '3': 'متطورة'
+                };
+
+                return "<span class='px-3 py-1 rounded-full text-sm font-semibold " + (styles[data] ?? "bg-gray-100 text-gray-700") +"'> " + ( labels[data] ?? 'غير محدد' ) + "</span>" ;
+            }
+          },
+
+          // Companion Need
+          { data: 'companian_need', className: 'text-center', 
+            render: function(data) {
+                return data === 'Y' ? 'نعم' : 'لا';
+            }
+          },
+
+          // Action Buttons
+          { data: 'id', orderable: false, searchable: false, 
+            render: function(data) {
+
+                return '<div class="d-flex justify-content-evenly gap-1">'+
+
+                      '<a href="/student/'+ data +'/view_student" class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">'+
+                          '<i class="fa-solid fa-eye text-sm"></i>'+
+                      '</a>'+
+
+                      '<button data-id="'+ data +'" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">'+
+                          '<i class="fa-solid fa-pen-to-square text-sm"></i>'+
+                      '</button>'+
+
+                      '<button data-id="'+ data +'" data-bs-toggle="modal" data-bs-target="#changeStatus" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm"> '+
+                          '<i class="fa-solid fa-trash-can text-sm"></i>'+
+                      '</button>'+
+
+                  '</div>';
+            }
+          }
+      ],
+      
+      initComplete: function () {
+        // add new checkbox to show active and inactive users
+        $('#students_list_wrapper > div:first').append(`
+            <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto">
+              <div class="form-check form-switch ms-3">
+                <input class="form-check-input" type="checkbox" id="toggleInactive">
+                <label class="form-check-label" for="toggleInactive">
+                    عرض التلاميذ غير النشطين
+                </label>
+              </div>
+            </div>
+        `);
+        $('#toggleInactive').on('change', function () {
+            var value = $(this).is(':checked') ? 'on' : 'off';
+            students_list.ajax.url('/dashboard?include_inactive_students=' + value).load();
+        });
+      },
+
+    }
+  );
+  
+  
   $("#add_student_sbmt").click(function(e) {
     
     e.preventDefault(); // prevent any default form submission
