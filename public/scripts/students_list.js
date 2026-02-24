@@ -56,21 +56,21 @@ $(document).ready(function () {
           { data: 'id', orderable: false, searchable: false, 
             render: function(data) {
 
-                return '<div class="d-flex justify-content-evenly gap-1">'+
+                return `<div class="d-flex justify-content-evenly gap-1">
 
-                      '<a href="/student/'+ data +'/view_student" class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">'+
-                          '<i class="fa-solid fa-eye text-sm"></i>'+
-                      '</a>'+
+                      <a href="/student/${data}/view_student" class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">
+                          <i class="fa-solid fa-eye text-sm"></i>
+                      </a>
 
-                      '<button data-id="'+ data +'" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">'+
-                          '<i class="fa-solid fa-pen-to-square text-sm"></i>'+
-                      '</button>'+
+                      <button data-id="${data}" data-bs-toggle="modal" data-bs-target="#StoreStudents" class="edit_student inline-flex items-center justify-center w-9 h-9 rounded-xl bg-yellow-500 text-white hover:bg-yellow-600 transition shadow-sm">
+                          <i class="fa-solid fa-pen-to-square text-sm"></i>
+                      </button>
 
-                      '<button data-id="'+ data +'" data-bs-toggle="modal" data-bs-target="#changeStatus" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm"> '+
-                          '<i class="fa-solid fa-trash-can text-sm"></i>'+
-                      '</button>'+
+                      <button data-id="${data}" data-bs-toggle="modal" data-bs-target="#changeStatus" class="change_status inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-600 text-white hover:bg-red-700 transition shadow-sm">
+                          <i class="fa-solid fa-trash-can text-sm"></i>
+                      </button>
 
-                  '</div>';
+                  </div>` ;
             }
           }
       ],
@@ -132,9 +132,9 @@ $(document).ready(function () {
 
 
   // Change students status
-  $(".change_status").click(function(e) {
+  $(document).on('click', '.change_status', function(e) {
     
-    var student_id = $(this).closest("tr").find("th").eq(0).text().trim();
+    var student_id = $(this).closest("tr").find("td").eq(0).text().trim();
     
     $("#change_status_student_id").val(student_id);
     $("#new_status").val('0'); // تعيين الحالة إلى غير نشيط
@@ -147,9 +147,9 @@ $(document).ready(function () {
   }) ;
   
   // edit info of the student
-  $(".edit_student").click(function(e) {
+  $(document).on('click', '.edit_student', function(e) {
     
-    var student_id = $(this).closest("tr").find("th").eq(0).text().trim();
+    var student_id = $(this).closest("tr").find("td").eq(0).text().trim();
 
     // hide add student button 
     $("#add_student_sbmt").hide() ;
@@ -192,6 +192,7 @@ $(document).ready(function () {
       error: function(jqXHR, textStatus, errorThrown) {
         // Code to run if the request fails
         console.error(errorThrown);
+        alert("")
       },
       complete: function(jqXHR, textStatus) {
         // Code to run after the request finishes (regardless of success/error)
@@ -221,7 +222,7 @@ $(document).ready(function () {
       type: "POST",
       data : $("#student_form").serialize(),
       success: function(result) {
-        console.log(result)
+        
         if (result.status) {
       
           $("#ajax_message").html(

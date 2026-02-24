@@ -161,5 +161,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+
 @endsection

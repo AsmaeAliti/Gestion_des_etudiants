@@ -65,7 +65,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}" ></script>
     <script src="{{ asset('js/chart_v_45.min.js') }}" ></script>
     <script src="{{ asset('scripts/statistics.js') }}" ></script>
 @endsection

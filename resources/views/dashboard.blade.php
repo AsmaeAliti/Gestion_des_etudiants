@@ -330,7 +330,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}" ></script>
     <script src="{{ asset('js/dataTables.min.js') }}" ></script>
     <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}" ></script>
     <script src="{{ asset('scripts/students_list.js') }}" ></script>

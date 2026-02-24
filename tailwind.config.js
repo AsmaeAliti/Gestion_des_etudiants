@@ -5,6 +5,11 @@ export default {
     "./resources/**/*.js",
     "./resources/**/*.vue",
   ],
+  safelist: [
+    {
+      pattern: /(bg|text|border|hover:bg|hover:text)-(.*)/,
+    },
+  ],
   theme: {
     extend: {},
   },
